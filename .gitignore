@@ -1,0 +1,24 @@
+
+# Dipendenze Node.js
+node_modules/
+
+# Build
+dist/
+
+# Variabili d'ambiente e segreti
+.env
+.env.*
+!.env.example
+
+# Python, se usato in futuro
+.venv/
+__pycache__/
+*.py[cod]
+
+# Log
+*.log
+
+# File di sistema e IDE
+.DS_Store
+Thumbs.db
+.vscode/
