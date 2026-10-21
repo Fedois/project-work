@@ -7,6 +7,7 @@ Piattaforma digitale per la gestione dei servizi di un'impresa culturale.
 - Frontend: React, TypeScript, Vite
 - Backend: Node.js, Express, TypeScript
 - Database: da configurare
+- Deploy: Netlify e Render
 
 ## Avvio del progetto
 

@@ -1,0 +1,144 @@
+google scholar / scopus (per fare ricerche)
+
+mettere del codice saliente nel template commentata. IL rigetto ce se non metti bibliografia (analizzare un pò ciò che è stato fatto da altri analizzando testi scientifici, capire cosa hanno fatto e cosa hanno ottenuto gli altri), non c'è link repositroy, 
+non commenti codice o se è scritto male in italiano.
+
+pre valutazione sessione straordinata 21 novembre 2026 (feedback entro 7 dicembre, risposta del prof)
+
+per bibliografia, alcune ricerche:
+https://www.mdpi.com/2673-6470/5/4/54 (per avere base culturale molto generale)
+
+
+
+
+
+IDEE: Progettazione e sviluppo di una piattaforma web per la gestione degli eventi e la valorizzazione della conoscenza in una community tecnologica: il caso Modena.rb.
+
+Secondo me, puoi usare Modena.rb come organizzazione di riferimento per questo project work, e l'idea è anche piuttosto interessante perché puoi collegare una community tecnologica reale alla digitalizzazione dei suoi processi.
+
+C'è però una distinzione importante: la traccia parla di un'impresa culturale o di un'organizzazione che opera nell'ambito della cultura. Dovresti quindi presentare Modena.rb non semplicemente come un gruppo di sviluppatori Ruby on Rails, ma come una community di promozione della cultura informatica, della formazione e della condivisione della conoscenza tecnologica.
+
+Non è necessario che sia già formalmente costituita come associazione culturale per poter simulare il progetto, dato che la traccia ammette espressamente un'organizzazione reale o simulata. Se vuoi basarti sull'organizzazione reale, dovrai naturalmente descriverne le attività effettive senza attribuirle caratteristiche che non possiede.
+1. L'idea di progetto che ti consiglierei
+
+
+
+
+
+
+
+
+
+Modena.rb — Community Management Platform
+Una piattaforma web per digitalizzare la gestione degli eventi della community: meetup, talk, workshop e iniziative formative dedicate a Ruby, Ruby on Rails e allo sviluppo software.
+Coerente con la traccia
+
+
+
+Immagina che oggi gli organizzatori gestiscano eventi, iscrizioni e partecipanti usando strumenti diversi, come moduli online, fogli di calcolo, email e chat.
+
+Il tuo progetto potrebbe riunire queste attività in un'unica applicazione sviluppata con Ruby on Rails.
+
+Il problema aziendale da affrontare sarebbe quindi:
+La gestione frammentata degli eventi e dei partecipanti di una community tecnologica rende più complessa l'organizzazione delle iniziative, il monitoraggio delle iscrizioni e la raccolta dei feedback. Si propone la realizzazione di una piattaforma web integrata per centralizzare tali processi e supportare la gestione e la valorizzazione delle attività culturali e formative della community.
+
+Questa formulazione è coerente con la traccia, purché descriva una situazione reale oppure venga esplicitamente presentata come scenario simulato.
+2. Quali funzionalità sviluppare
+Ti suggerirei di mantenere il prototipo abbastanza piccolo da poterlo completare e documentare bene.
+
+Gestione degli eventi
+
+Gli organizzatori creano, modificano e pubblicano meetup, workshop e talk con data, luogo, descrizione e numero massimo di partecipanti.
+
+Funzionalità principale
+
+
+
+
+Prenotazioni e iscrizioni
+
+Gli utenti consultano gli eventi e si iscrivono. Il sistema controlla i posti disponibili e impedisce iscrizioni duplicate.
+
+Funzionalità principale
+
+
+
+
+Feedback dei partecipanti
+
+Dopo un evento, gli utenti possono lasciare una valutazione e un commento, per esempio sulla qualità del talk e sull'organizzazione.
+
+
+
+
+Dashboard degli organizzatori
+
+Visualizzazione del numero di eventi, iscrizioni, partecipanti effettivi e valutazioni medie.
+
+
+
+Il catalogo degli eventi sarebbe il punto centrale della piattaforma. Non aggiungerei inizialmente funzionalità complesse come pagamenti, intelligenza artificiale o integrazioni con servizi esterni: puoi citarle negli sviluppi futuri.
+3. Architettura tecnica con Ruby on Rails
+La traccia cita HTML, CSS, JavaScript e un linguaggio orientato agli oggetti per il backend. Ruby è un linguaggio orientato agli oggetti, quindi Ruby on Rails è una scelta tecnicamente adatta.
+Front-end web
+
+HTML · CSS · JavaScript
+
+Pagine eventi, iscrizioni, dashboard
+
+Back-end — Ruby on Rails
+
+Controller · Model · logica applicativa
+
+API REST in JSON
+
+Database relazionale
+
+PostgreSQL oppure SQLite per il prototipo
+
+Utenti · Eventi · Iscrizioni · Feedback
+
+
+Un aspetto da curare nella relazione è la comunicazione tra componenti. Potresti esporre API REST che restituiscono dati JSON e mostrare come il front-end invia richieste al server. In alternativa, Rails può generare direttamente le pagine HTML e offrire API per le operazioni che richiedono una comunicazione separata.
+
+Per rendere il progetto coerente con la richiesta di un'architettura a componenti, documenterei esplicitamente almeno alcuni endpoint API, anche se non serve costruire necessariamente due applicazioni indipendenti.
+Modello del database
+Tabella	Campi indicativi
+users	id, nome, email, ruolo
+events	id, titolo, descrizione, data, luogo, capienza
+registrations	id, user_id, event_id, data_iscrizione, stato
+feedbacks	id, user_id, event_id, valutazione, commento
+Le relazioni principali sarebbero:
+- Un utente può iscriversi a molti eventi.
+- Un evento può avere molti partecipanti.
+- Un utente può lasciare feedback per gli eventi a cui ha partecipato.
+4. Come collegare il progetto alla traccia universitaria
+Per non perdere punti sulla parte INF/01, non presenterei il lavoro soltanto come un sito per pubblicizzare meetup.
+
+Il report dovrebbe mostrare come hai progettato il sistema informatico:
+- Elaborazione: come Rails valida le iscrizioni e verifica la capienza degli eventi.
+- Memorizzazione: come il database conserva utenti, eventi e prenotazioni e mantiene l'integrità dei dati.
+- Comunicazione: come il browser invia richieste HTTP al backend e riceve risposte JSON.
+- Architettura applicativa: separazione tra interfaccia, logica applicativa, API e persistenza.
+- Testing: scenari per iscrizioni valide, eventi esauriti, duplicati, autenticazione e permessi.
+- Documentazione: diagramma UML dei casi d'uso, diagramma ER del database, descrizione degli endpoint e istruzioni per avviare il progetto.
+Esempi di endpoint:
+Metodo	Endpoint	Funzione
+GET	/api/events	Elenco degli eventi
+GET	/api/events/:id	Dettaglio di un evento
+POST	/api/events/:id/registrations	Iscrizione a un evento
+GET	/api/events/:id/registrations	Elenco delle iscrizioni autorizzate
+POST	/api/events/:id/feedbacks	Invio di un feedback
+5. Ma Modena.rb può essere davvero considerata un'organizzazione culturale?
+Questa è la parte da valutare con più attenzione.
+
+Una community che organizza incontri tecnici, promuove l'apprendimento, diffonde conoscenze e favorisce la condivisione di esperienze può essere descritta come un'organizzazione che svolge attività di promozione culturale e formativa in ambito tecnologico. Tuttavia, la qualificazione giuridica dipende dalle caratteristiche concrete dell'organizzazione, non soltanto dal nome o dal tipo di eventi.
+
+Per il project work, la traccia ti permette di scegliere un'organizzazione simulata. Quindi non sei obbligato a dimostrare che Modena.rb sia già un'associazione culturale formalmente costituita: puoi dichiarare che la piattaforma è progettata per una community tecnologica che promuove la cultura informatica.
+
+Il mio consiglio finale
+Io sceglierei questo progetto, soprattutto se conosci già il funzionamento di Modena.rb e puoi confrontarti con chi organizza gli eventi. Avresti un caso d'uso concreto, requisiti comprensibili e una motivazione credibile per ogni funzionalità.
+
+Prima di fissare definitivamente il titolo, però, ti chiederei una cosa: Modena.rb organizza già meetup o workshop con una certa regolarità, oppure è per ora un gruppo informale che vorreste far crescere?
+
+Te lo chiedo perché, se gli eventi esistono già, possiamo impostare il report come analisi e digitalizzazione di un processo reale; se invece siete agli inizi, conviene descrivere con trasparenza un'organizzazione simulata basata sul vostro progetto di community.
