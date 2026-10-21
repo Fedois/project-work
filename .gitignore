@@ -22,3 +22,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Prisma
+backend/src/generated/prisma
