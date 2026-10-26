@@ -6,7 +6,30 @@ non commenti codice o se è scritto male in italiano.
 pre valutazione sessione straordinata 21 novembre 2026 (feedback entro 7 dicembre, risposta del prof)
 
 per bibliografia, alcune ricerche:
-https://www.mdpi.com/2673-6470/5/4/54 (per avere base culturale molto generale)
+0. https://www.mdpi.com/2673-6470/5/4/54 (per avere base culturale molto generale)
+
+1. Jeng, J. (2005). “What Is Usability in the Context of the Digital Library and How Can It Be Measured?”
+Information Technology and Libraries, 24(2), 47–56.
+DOI: 10.6017/ital.v24i2.3365
+Perché leggerlo: affronta la valutazione dell'usabilità delle biblioteche digitali, considerando efficacia, efficienza, soddisfazione e facilità di apprendimento.
+Dove citarlo: capitolo sui requisiti non funzionali e valutazione dell'interfaccia. Puoi tradurre questi concetti in test pratici, per esempio verificando se un lettore riesce a trovare un libro e inviare una richiesta senza assistenza.
+https://ital.corejournals.org/index.php/ital/article/view/3365
+
+
+2. “Design and Implementation of Web-Based Library Management System” (2023)
+Pubblicazione in 2023 International Conference on Information Processing and Network Provisioning (ICIPNP).
+DOI: 10.1109/ICIPNP62754.2023.00050
+Perché leggerlo: descrive la progettazione di un sistema web per la gestione bibliotecaria, includendo architettura browser-server, requisiti, modello ER e test funzionali.
+Dove citarlo: progettazione del database, definizione dei requisiti e metodologia di implementazione. È utile come lavoro correlato da confrontare con il tuo prototipo
+https://doi.org/10.1109/ICIPNP62754.2023.00050?utm_source=chatgpt.com
+
+
+3. “Design variations and evaluation of loanable technology web pages in academic library websites” (2023)
+The Journal of Academic Librarianship, 49(3), articolo 102670.
+DOI: 10.1016/j.acalib.2023.102670
+Perché leggerlo: analizza le modalità con cui le biblioteche accademiche presentano e rendono accessibili le risorse disponibili per il prestito.
+Dove citarlo: progettazione delle schede delle risorse, visualizzazione della disponibilità e scelte dell'interfaccia. Il contesto riguarda tecnologie prestabili, quindi è un riferimento complementare, non uno studio generale su tutti i prestiti bibliotecari
+https://doi.org/10.1016/j.acalib.2023.102670?utm_source=chatgpt.com
 
 
 
