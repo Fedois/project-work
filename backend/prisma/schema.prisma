@@ -7,5 +7,93 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
+}
+
+enum UserRole {
+  MEMBER
+  LIBRARIAN
+  ADMIN
+}
+
+enum ReservationStatus {
+  PENDING // In attesa di approvazione
+  APPROVED // Approvata, libro può essere ritirato
+  FULFILLED // Libro ritirato
+  REJECTED // Rifiutata dal bibliotecario
+  CANCELLED // Annullata dall'utente
+}
+
+enum Category {
+  FANTASY
+  THRILLER
+  HORROR
+  DRAMA
+  COMEDY
+  ACTION
+  ADVENTURE
+  SCI_FI
+  MYSTERY
+  ROMANCE
+  BUSINESS
+  OTHER
+}
+
+model User {
+  id           String        @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String        @unique
+  role         UserRole      @default(MEMBER)
+  loans        Loan[]
+  reservations Reservation[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Book {
+  id              String        @id @default(cuid())
+  title           String
+  author          String
+  isbn            String?       @unique
+  publicationYear Int?
+  quantity        Int           @default(1)
+  category        Category
+  loans           Loan[]
+  reservations    Reservation[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([title])
+}
+
+model Loan {
+  id         String    @id @default(cuid())
+  loanDate   DateTime  @default(now())
+  dueDate    DateTime
+  returnedAt DateTime?
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  bookId     String
+  book       Book      @relation(fields: [bookId], references: [id], onDelete: Restrict)
+  createdAt  DateTime  @default(now())
+
+  @@index([userId, returnedAt])
+  @@index([bookId, returnedAt])
+  @@index([dueDate, returnedAt])
+}
+
+model Reservation {
+  id        String            @id @default(cuid())
+  status    ReservationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  userId    String
+  user      User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  bookId    String
+  book      Book              @relation(fields: [bookId], references: [id], onDelete: Restrict)
+
+  @@index([status, createdAt])
+  @@index([userId, status])
+  @@index([bookId, status])
 }

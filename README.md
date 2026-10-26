@@ -6,7 +6,9 @@ Piattaforma digitale per la gestione dei servizi di un'impresa culturale.
 
 - Frontend: React, TypeScript, Vite
 - Backend: Node.js, Express, TypeScript
-- Database: Prisma ORM e SQLite
+- Database: Prisma ORM e Supabase (PostgreSQL)
+- Autenticazione: Supabase Auth
+- Test: Vitest e Supertest
 - Deploy: Netlify e Render
 
 ## Avvio del progetto
