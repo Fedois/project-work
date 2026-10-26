@@ -56,6 +56,7 @@ model Book {
   title           String
   author          String
   isbn            String?       @unique
+  coverImagePath  String?
   publicationYear Int?
   quantity        Int           @default(1)
   category        Category
