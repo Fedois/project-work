@@ -3,9 +3,16 @@ google scholar / scopus (per fare ricerche)
 mettere del codice saliente nel template commentata. IL rigetto ce se non metti bibliografia (analizzare un pò ciò che è stato fatto da altri analizzando testi scientifici, capire cosa hanno fatto e cosa hanno ottenuto gli altri), non c'è link repositroy, 
 non commenti codice o se è scritto male in italiano.
 
-pre valutazione sessione straordinata 21 novembre 2026 (feedback entro 7 dicembre, risposta del prof)
 
-per bibliografia, alcune ricerche:
+
+RICERCHE:
+per design: 
+0. https://www.figma.com/it-it/resource-library/esempi-siti-web-ai/ (per ispirazione)
+1. https://uiverse.io/ (per componenti)
+2. https://www.stylosheet.com/ (per componenti)
+
+
+per bibliografia:
 0. https://www.mdpi.com/2673-6470/5/4/54 (per avere base culturale molto generale)
 
 1. Jeng, J. (2005). “What Is Usability in the Context of the Digital Library and How Can It Be Measured?”
@@ -35,6 +42,9 @@ https://doi.org/10.1016/j.acalib.2023.102670?utm_source=chatgpt.com
 
 
 
+
+
+
 IDEE: Progettazione e sviluppo di una piattaforma web per la gestione degli eventi e la valorizzazione della conoscenza in una community tecnologica: il caso Modena.rb.
 
 Secondo me, puoi usare Modena.rb come organizzazione di riferimento per questo project work, e l'idea è anche piuttosto interessante perché puoi collegare una community tecnologica reale alla digitalizzazione dei suoi processi.
@@ -44,13 +54,7 @@ C'è però una distinzione importante: la traccia parla di un'impresa culturale 
 Non è necessario che sia già formalmente costituita come associazione culturale per poter simulare il progetto, dato che la traccia ammette espressamente un'organizzazione reale o simulata. Se vuoi basarti sull'organizzazione reale, dovrai naturalmente descriverne le attività effettive senza attribuirle caratteristiche che non possiede.
 1. L'idea di progetto che ti consiglierei
 
-
-
-
-
-
-
-
+-------------------
 
 Modena.rb — Community Management Platform
 Una piattaforma web per digitalizzare la gestione degli eventi della community: meetup, talk, workshop e iniziative formative dedicate a Ruby, Ruby on Rails e allo sviluppo software.

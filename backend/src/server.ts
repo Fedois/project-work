@@ -1,16 +1,20 @@
+import "dotenv/config";
 import express from "express";
-import { prisma } from "./lib/prisma.js";
+import bookRoutes from "./routes/book.routes.js";
+import cors from "cors";
 
+// Express app creation
 const app = express();
-const PORT = 3000;
 
+// Middleware
+app.use(cors());
 app.use(express.json());
 
-app.get("/api/health", async (_req, res) => {
-  const mex = await prisma.book.findMany();
-  res.json({ status: "ok", message: "Backend funzionante", mex });
-});
+// Routes
+app.use("/api/books", bookRoutes);
 
+// Server startup
+const PORT = Number(process.env.PORT ?? 3000);
 app.listen(PORT, () => {
-  console.log(`Server avviato su http://localhost:${PORT}`);
+  console.log(`Server started on http://localhost:${PORT}`);
 });

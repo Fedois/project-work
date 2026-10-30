@@ -1,0 +1,119 @@
+.footer {
+  background: var(--neutral-900);
+  color: var(--neutral-400);
+  padding: 64px 24px 32px;
+  margin-top: auto;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.top {
+  display: flex;
+  gap: 64px;
+  flex-wrap: wrap;
+}
+
+/* Brand */
+.brand {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--brand-500), var(--brand-700));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.logoText {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--neutral-0);
+}
+
+.brandDesc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--neutral-500);
+}
+
+.socialLink:hover {
+  background: var(--brand-700);
+  border-color: var(--brand-600);
+  color: #fff;
+}
+
+/* Links */
+.links {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.linkCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.colTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--neutral-0);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.colLink {
+  font-size: 14px;
+  color: var(--neutral-500);
+  transition: color var(--transition-fast);
+  line-height: 1.8;
+}
+
+.colLink:hover { color: var(--neutral-100); }
+
+/* Bottom */
+.bottom {
+  text-align: center;
+  padding-top: 32px;
+  border-top: 1px solid var(--neutral-800);
+}
+
+.copy {
+  font-size: 13px;
+  color: var(--neutral-600);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .top { gap: 40px; }
+  .brand { flex: 1 1 100%; }
+  .links { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .footer { padding: 48px 16px 24px; }
+  .links { grid-template-columns: repeat(2, 1fr); }
+}

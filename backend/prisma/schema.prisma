@@ -47,6 +47,7 @@ model User {
   role         UserRole      @default(MEMBER)
   loans        Loan[]
   reservations Reservation[]
+  feedbacks    Feedback[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
@@ -57,11 +58,14 @@ model Book {
   author          String
   isbn            String?       @unique
   coverImagePath  String?
-  publicationYear Int?
+  publicationDate DateTime      
   quantity        Int           @default(1)
   category        Category
   loans           Loan[]
   reservations    Reservation[]
+  feedbacks       Feedback[]
+  description     String?
+  pages           Int?
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
@@ -97,4 +101,19 @@ model Reservation {
   @@index([status, createdAt])
   @@index([userId, status])
   @@index([bookId, status])
+}
+
+model Feedback {
+  id          String   @id @default(cuid())
+  rating      Int
+  title       String?
+  comment     String?
+  bookId      String
+  book        Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@index([bookId])
+  @@index([userId])
 }

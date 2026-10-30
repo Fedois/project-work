@@ -1,13 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <title>Hubiblio – La tua biblioteca digitale</title>
+    <meta name="description" content="Hubiblio è la tua biblioteca digitale personale. Esplora migliaia di libri, scopri nuovi autori e prenota i tuoi titoli preferiti." />
+    <meta name="theme-color" content="#6272f5" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Hubiblio – La tua biblioteca digitale" />
+    <meta property="og:description" content="Esplora migliaia di libri, scopri nuovi autori e prenota i tuoi titoli preferiti." />
+    <meta property="og:type" content="website" />
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <style>
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 16px;
+        background: #6272f5;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 0 0 8px 8px;
+        font-weight: 600;
+        z-index: 9999;
+        text-decoration: none;
+        font-family: system-ui, sans-serif;
+      }
+      .skip-link:focus { top: 0; }
+    </style>
   </body>
 </html>

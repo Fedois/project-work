@@ -8,7 +8,7 @@ flowchart TB
     C -- Risultati delle query --> B
     n1["Catalogo, area personale, pannello bibliotecario, dashboard"]
     n2["Route, Middleware, Controller Servizi, Accesso ai dati"]
-    n3["Utenti, Libri, Copie, Prestiti, Prenotazioni, Categorie"]
+    n3["Utenti, Libri, Prestiti, Prenotazioni, Feedback"]
 
     n1@{ shape: text}
     n2@{ shape: text}

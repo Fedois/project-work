@@ -1,0 +1,251 @@
+/* Base card */
+.card {
+  background: var(--neutral-0);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition:
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal),
+    border-color var(--transition-normal);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--brand-200);
+}
+
+/* Cover wrapper */
+.coverWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.cover {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 20px 16px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: filter var(--transition-normal);
+}
+
+.coverImg {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  object-fit: contain;
+  transition: filter var(--transition-normal);
+}
+
+.card:hover .cover { filter: brightness(1.05); }
+
+/* Decorative radial pattern on cover */
+.coverPattern {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgb(255 255 255 / 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgb(0 0 0 / 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.coverTitle {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.coverTitleText {
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.3);
+  line-height: 1.2;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.coverAuthorText {
+  color: rgb(255 255 255 / 0.8);
+  font-size: 11px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Wishlist button */
+.wishlistBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.2);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgb(255 255 255 / 0.3);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.card:hover .wishlistBtn { opacity: 1; }
+.wishlistBtn:hover {
+  background: rgb(255 255 255 / 0.35);
+  transform: scale(1.1);
+}
+
+/* Availability badge */
+.availBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(6px);
+}
+
+.availYes {
+  background: rgb(16 185 129 / 0.2);
+  border: 1px solid rgb(16 185 129 / 0.4);
+  color: #d1fae5;
+}
+
+.availNo {
+  background: rgb(239 68 68 / 0.2);
+  border: 1px solid rgb(239 68 68 / 0.4);
+  color: #fee2e2;
+}
+
+/* Info area */
+.info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+/* Category chip */
+.categoryChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  width: fit-content;
+}
+
+/* Titles */
+.title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: var(--neutral-900);
+  line-height: 1.25;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  transition: color var(--transition-fast);
+}
+
+.card:hover .title { color: var(--brand-600); }
+
+.author {
+  font-size: 13px;
+  color: var(--neutral-500);
+  font-weight: 500;
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--gold-500);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ratingDot { color: var(--neutral-300); }
+
+.pages {
+  color: var(--neutral-400);
+  font-weight: 400;
+}
+
+/* Description */
+.description {
+  font-size: 13px;
+  color: var(--neutral-500);
+  line-height: 1.6;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-top: 2px;
+}
+
+/* CTA button */
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 12px;
+  padding-bottom: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-600);
+  transition: color var(--transition-fast), gap var(--transition-fast);
+}
+
+.ctaBtn:hover {
+  color: var(--brand-700);
+  gap: 10px;
+}
+
+/* ══════════════ Variants ══════════════ */
+
+/* Featured variant */
+.featured .cover {
+  height: 200px;
+  justify-content: flex-end;
+}
+
+.featured .coverTitleText { font-size: 16px; }
+
+/* Catalog variant */
+.catalog .cover {
+  height: 160px;
+}
+
+.catalog .coverTitleText { font-size: 14px; }
