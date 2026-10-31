@@ -1,5 +1,6 @@
-import { BookOpen } from 'lucide-react';
 import styles from './Footer.module.css';
+import Logo from '../../components/Logo'
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -8,12 +9,7 @@ export default function Footer() {
         <div className={styles.top}>
           {/* Brand */}
           <div className={styles.brand}>
-            <a href="#" className={styles.logo} aria-label="Hubiblio – torna all'inizio">
-              <div className={styles.logoIcon}>
-                <BookOpen size={18} strokeWidth={2.2} />
-              </div>
-              <span className={styles.logoText}>Hubiblio</span>
-            </a>
+            <Link to="/"><Logo variant="footer" size={18}/></Link>
             <p className={styles.brandDesc}>
               La biblioteca digitale che ti avvicina al mondo dei libri.
               Esplora, scopri, prenota.

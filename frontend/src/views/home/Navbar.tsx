@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Menu, X, User, ChevronDown } from 'lucide-react';
+import Logo from '../../components/Logo'
 import styles from './Navbar.module.css';
 
 const NAV_LINKS = [
@@ -23,12 +24,7 @@ export default function Navbar() {
     <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <nav className={styles.inner} aria-label="Navigazione principale">
         {/* Logo */}
-        <Link to="/" className={styles.logo} aria-label="Hubiblio – home">
-          <div className={styles.logoIcon}>
-            <BookOpen size={20} strokeWidth={2.2} />
-          </div>
-          <span className={styles.logoText}>Hubiblio</span>
-        </Link>
+        <Link to="/" aria-label="Hubiblio – home"><Logo variant="default"/></Link>
 
         {/* Desktop links */}
         <ul className={styles.links} role="list">
@@ -41,13 +37,13 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className={styles.actions}>
-          <button className={styles.profileBtn} aria-label="Profilo utente">
+          <Link to="/login" className={styles.profileBtn} aria-label="Profilo utente">
             <div className={styles.avatar}>
               <User size={16} />
             </div>
             <span className={styles.profileName}>Marco R.</span>
             <ChevronDown size={14} />
-          </button>
+          </Link>
 
           {/* Mobile hamburger */}
           <button
