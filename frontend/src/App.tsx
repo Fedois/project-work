@@ -4,6 +4,7 @@ import Navbar from './views/home/Navbar';
 import Home from './views/home/Home';
 import Footer from './views/home/Footer';
 import BookDetailPage from './views/book/BookDetailPage';
+import { ToastProvider } from './context/ToastContext';
 import './App.css';
 
 function ScrollToTop() {
@@ -17,15 +18,17 @@ function ScrollToTop() {
 export default function App() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Navbar />
+      <ToastProvider>
+        <ScrollToTop />
+        <Navbar />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/books/:id" element={<BookDetailPage />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/books/:id" element={<BookDetailPage />} />
+        </Routes>
 
-      <Footer />
+        <Footer />
+      </ToastProvider>
     </BrowserRouter>
   );
 }

@@ -533,25 +533,6 @@
   color: var(--neutral-600);
 }
 
-/* Toast notification banner */
-.toastNotice {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: var(--neutral-900);
-  color: #ffffff;
-  padding: 14px 22px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-2xl);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  z-index: 1000;
-  animation: slideInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
 @keyframes slideInUp {
   from {
     transform: translateY(20px);

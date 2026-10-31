@@ -10,12 +10,12 @@ import {
   Layers,
   Send,
   Barcode,
-  Check,
 } from 'lucide-react';
 import { getBookById } from '../../services/bookService';
 import type { Book, Feedback } from '../../types/books';
 import { CATEGORY_LABELS, CATEGORY_COLORS, COVER_GRADIENTS } from '../../types/books';
 import styles from './BookDetailPage.module.css';
+import { useToast } from '../../context/ToastContext';
 
 const RATING_DESCRIPTORS: Record<number, string> = {
   1: 'Poco convincente',
@@ -35,7 +35,7 @@ export default function BookDetailPage() {
 
   // Local interaction states
   // const [isWishlisted, setIsWishlisted] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   // Local feedback form states (No API calls, purely client-side)
   const [formRating, setFormRating] = useState<number>(5);
@@ -45,14 +45,6 @@ export default function BookDetailPage() {
 
   // Local reviews list (combines database feedbacks, samples, and user newly added reviews)
   const [localFeedbacks, setLocalFeedbacks] = useState<Feedback[]>([]);
-
-  // Show transient toast
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 3500);
-  };
 
   // Fetch Book
   useEffect(() => {
@@ -629,14 +621,6 @@ export default function BookDetailPage() {
           </div>
         </section>
       </div>
-
-      {/* ── Toast notice popup ────────────────────────────────────────── */}
-      {toastMessage && (
-        <aside className={styles.toastNotice} role="status" aria-live="polite">
-          <Check size={18} color="#34d399" />
-          <span>{toastMessage}</span>
-        </aside>
-      )}
     </main>
   );
 }
