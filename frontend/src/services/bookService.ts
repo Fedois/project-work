@@ -1,4 +1,5 @@
 import type { Book, BooksApiResponse, Category } from '../types/books';
+import { apiFetch } from '../lib/api';
 
 export interface GetBooksParams {
   search?: string;
@@ -30,7 +31,7 @@ export async function getBooks(params: GetBooksParams = {}): Promise<Book[]> {
   const queryString = query.toString();
   const url = queryString ? `/api/books?${queryString}` : '/api/books';
 
-  const res = await fetch(url);
+  const res = await apiFetch(url);
   if (!res.ok) {
     throw new Error(`Errore nella richiesta (${res.status}): ${res.statusText}`);
   }
@@ -40,7 +41,7 @@ export async function getBooks(params: GetBooksParams = {}): Promise<Book[]> {
 }
 
 export async function getBookById(id: string): Promise<Book> {
-  const res = await fetch(`/api/books/${id}`);
+  const res = await apiFetch(`/api/books/${id}`);
   if (!res.ok) {
     throw new Error(
       res.status === 404
