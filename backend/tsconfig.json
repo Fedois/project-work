@@ -5,7 +5,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
 
-    "rootDir": ".",
+    "rootDir": "./src",
     "outDir": "./dist",
 
     "types": ["node"],
@@ -13,7 +13,6 @@
 
     "sourceMap": true,
     "declaration": false,
-    "declarationMap": false,
 
     "strict": true,
     "noUncheckedIndexedAccess": true,
@@ -24,6 +23,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["**/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
