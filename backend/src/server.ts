@@ -1,20 +1,29 @@
 import "dotenv/config";
 import express from "express";
 import bookRoutes from "./routes/book.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 // Express app creation
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.use(express.json());
 
 // Routes
 app.use("/api/books", bookRoutes);
+app.use("/api/auth", authRoutes);
 
 // Server startup
 const PORT = Number(process.env.PORT ?? 3000);
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server started on http://localhost:${PORT}`);
+  console.log(`Server started on port ${PORT}`);
 });

@@ -21,7 +21,7 @@ export default function Footer() {
             {[
               {
                 title: 'Biblioteca',
-                items: ['Catalogo', 'In evidenza', 'Le mie letture'],
+                items: ['Catalogo', 'In evidenza'],
               },
               {
                 title: 'Privacy',
@@ -47,7 +47,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <p className={styles.copy}>© 2026 Hubiblio. Tutti i diritti riservati.</p>
+          <p className={styles.copy}>L-31 project work n.22</p>
         </div>
       </div>
     </footer>

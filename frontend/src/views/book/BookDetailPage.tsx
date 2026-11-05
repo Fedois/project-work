@@ -11,11 +11,12 @@ import {
   Send,
   Barcode,
 } from 'lucide-react';
-import { getBookById } from '../../services/bookService';
+import { getBookById } from '../../services/book.service';
 import type { Book, Feedback } from '../../types/books';
 import { CATEGORY_LABELS, CATEGORY_COLORS, COVER_GRADIENTS } from '../../types/books';
 import styles from './BookDetailPage.module.css';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../context/AuthContext';
 
 const RATING_DESCRIPTORS: Record<number, string> = {
   1: 'Poco convincente',
@@ -27,6 +28,7 @@ const RATING_DESCRIPTORS: Record<number, string> = {
 
 export default function BookDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
 
   // Book state
   const [book, setBook] = useState<Book | null>(null);
@@ -126,12 +128,21 @@ export default function BookDetailPage() {
 
   const handleReserve = () => {
     if (!book || book.quantity <= 0) return;
+    if (!user) {
+      showToast('Per favore, accedi per prenotare');
+      return;
+    }
     showToast(`Richiesta di prestito registrata per "${book.title}"! Ritira al desk.`);
   };
 
   // Purely visual / client-side form submission
   const handleSubmitReview = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!user) {
+      showToast('Per favore, accedi per scrivere una recensione');
+      return;
+    }
 
     if (!formComment.trim()) {
       showToast('Per favore, scrivi qualche parola nel tuo feedback.');
@@ -145,7 +156,7 @@ export default function BookDetailPage() {
       title: formTitle.trim() || 'Recensione del lettore',
       bookId: '231',
       userId: '1',
-      user : {
+      user: {
         id: '1',
         firstName: 'Fede',
         lastName: 'Der',

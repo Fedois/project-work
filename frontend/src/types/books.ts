@@ -45,13 +45,6 @@ export interface Book {
   updatedAt?: string | Date;
 }
 
-// API response shape
-export interface BooksApiResponse {
-  status: string;
-  count: number;
-  books: Book[];
-}
-
 // UI helpers
 export const CATEGORY_LABELS: Record<Category, string> = {
   FANTASY:   'Fantasy',

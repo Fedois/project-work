@@ -8,7 +8,15 @@ if (!supabaseUrl || !supabaseSecretKey) {
   throw new Error("Configurazione Supabase mancante");
 }
 
-export const supabaseStorage = createClient(
+export const supabase = createClient(
   supabaseUrl,
   supabaseSecretKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
 );
+
+export const supabaseStorage = supabase;

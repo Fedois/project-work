@@ -3,7 +3,7 @@ import { SlidersHorizontal, Library, X, RotateCcw, Search } from 'lucide-react';
 import BookCard from './BookCard';
 import type { Book, Category } from '../../types/books';
 import { CATEGORY_LABELS } from '../../types/books';
-import { getBooks } from '../../services/bookService';
+import { getBooks } from '../../services/book.service';
 import styles from './CatalogSection.module.css';
 
 interface CatalogSectionProps {

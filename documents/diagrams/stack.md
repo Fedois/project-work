@@ -6,9 +6,9 @@ flowchart TB
     B -- Risposte JSON --> A
     B -- Query tramite Prisma --> C[("Database — Supabase (PostgreSQL)")]
     C -- Risultati delle query --> B
-    n1["Catalogo, area personale, pannello bibliotecario, dashboard"]
+    n1["Catalogo, In evidenza, dashboard"]
     n2["Route, Middleware, Controller Servizi, Accesso ai dati"]
-    n3["Utenti, Libri, Prestiti, Prenotazioni, Feedback"]
+    n3["Utenti, Libri, Prestiti, Prenotazioni, Prestiti, Feedback"]
 
     n1@{ shape: text}
     n2@{ shape: text}

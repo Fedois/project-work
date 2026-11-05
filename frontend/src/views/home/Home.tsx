@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getBooks } from '../../services/bookService';
+import { getBooks } from '../../services/book.service';
 import type { Book } from '../../types/books';
 import Hero from './Hero';
 import FeaturedSection from './FeaturedSection';
 import CatalogSection from './CatalogSection';
 
-export default function Home(){
+export default function Home() {
     const [searchQuery, setSearchQuery] = useState('');
     const [activeSearch, setActiveSearch] = useState('');
     const [books, setBooks] = useState<Book[]>([]);
@@ -13,12 +13,12 @@ export default function Home(){
     useEffect(() => {
         // add books in evidence from backend (sorted by rating)
         getBooks({ sortBy: 'rating' })
-        .then((books) => {
-            setBooks(books);
-        })
-        .catch((err) => {
-            console.error('Errore nel recupero dei libri in evidenza:', err);
-        });
+            .then((books) => {
+                setBooks(books);
+            })
+            .catch((err) => {
+                console.error('Errore nel recupero dei libri in evidenza:', err);
+            });
     }, []);
 
     const handleSearchSubmit = (q: string) => {
