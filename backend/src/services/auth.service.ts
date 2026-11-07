@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase.js";
 import { prisma } from "../lib/prisma.js";
+import type { Request } from "express";
 
 export interface RegisterDTO {
   email: string;
@@ -155,6 +156,20 @@ export async function getCurrentUserFromToken(accessToken: string) {
     lastName: meta.lastName || "",
     role: "MEMBER",
   };
+}
+
+export async function getCurrentUserFromReq(req: Request){
+    let userId = req.body?.userId;
+
+    const token = req.cookies?.sb_access_token;
+    if (token) {
+      const currentUser = await getCurrentUserFromToken(token);
+      if (currentUser?.id) {
+        userId = currentUser.id;
+      }
+    }
+
+    return userId ? userId : null;
 }
 
 export async function logoutUser(accessToken?: string) {

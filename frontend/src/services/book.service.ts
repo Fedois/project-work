@@ -1,4 +1,4 @@
-import type { Book, Category } from '../types/books';
+import type { Book, Category, Feedback } from '../types/books';
 import { apiFetch } from '../lib/api';
 
 export interface GetBooksParams {
@@ -38,4 +38,15 @@ export async function getBooks(params: GetBooksParams = {}): Promise<Book[]> {
 export async function getBookById(id: string): Promise<Book> {
   const data = await apiFetch(`/api/books/${id}`);
   return data.book || data;
+}
+
+export async function addFeedback(feedback: Feedback): Promise<Feedback> {
+  const data = await apiFetch('/api/books/new-feedback', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(feedback),
+  });
+  return data.feedback;
 }

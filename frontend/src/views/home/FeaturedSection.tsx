@@ -54,20 +54,6 @@ export default function FeaturedSection({ books }: FeaturedSectionProps) {
             </div>
           ))}
         </div>
-
-        {/* Dot indicators (mobile) */}
-        <div className={styles.dots} role="tablist" aria-label="Navigazione libri">
-          {booksLastMonth.map((_, i) => (
-            <button
-              key={i}
-              role="tab"
-              aria-selected={activeIdx === i}
-              aria-label={`Libro ${i + 1}`}
-              className={`${styles.dot} ${activeIdx === i ? styles.dotActive : ''}`}
-              onClick={() => setActiveIdx(i)}
-            />
-          ))}
-        </div>
       </div>
     </section>
   );

@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown, LogOut, UserPlus, LogIn } from 'lucide-react';
-import Logo from '../../components/Logo';
-import { useAuth } from '../../context/AuthContext';
-import { useToast } from '../../context/ToastContext';
+import Logo from '../components/Logo';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import styles from './Navbar.module.css';
 
 const NAV_LINKS = [
   { label: 'Catalogo', href: '/#catalog' },
   { label: 'In evidenza', href: '/#featured' },
-  // { label: 'Le mie letture', href: '/#my-books' },
+  { label: 'Le mie prenotazioni', href: '/#my-books' },
 ];
 
 export default function Navbar() {

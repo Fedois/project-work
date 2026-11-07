@@ -1,5 +1,5 @@
 import { prisma } from "../lib/prisma.js";
-import { Category, type Prisma } from "../generated/prisma/client.js";
+import { Category, type Prisma, type Feedback } from "../generated/prisma/client.js";
 
 type BookQuery = {
   search?: unknown;
@@ -132,4 +132,35 @@ export async function getBookById(id: string | undefined) {
   }
 
   return { status: "ok" as const, book: { ...rawBook, rating: getAverageRating(rawBook.feedbacks) } };
+}
+
+export interface CreateFeedbackDTO {
+  rating: number;
+  comment?: string | null;
+  title?: string | null;
+  bookId: string;
+  userId: string;
+}
+
+export async function addFeedback(feedback: CreateFeedbackDTO) {
+  const newFeedback = await prisma.feedback.create({
+    data: {
+      rating: Math.round(Number(feedback.rating)),
+      comment: feedback.comment ? feedback.comment.trim() : null,
+      title: feedback.title ? feedback.title.trim() : null,
+      bookId: feedback.bookId,
+      userId: feedback.userId,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
+  });
+
+  return { status: "ok" as const, feedback: newFeedback };
 }

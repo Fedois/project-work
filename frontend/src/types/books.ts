@@ -14,7 +14,7 @@ export type Category =
   | 'OTHER';
 
 export interface Feedback {
-  id: string;
+  id?: string;
   rating: number;
   comment: string | null;
   title?: string | null;
@@ -25,7 +25,7 @@ export interface Feedback {
     firstName: string;
     lastName: string;
   };
-  createdAt: string | Date;
+  createdAt?: string | Date;
 }
 
 export interface Book {

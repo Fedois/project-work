@@ -1,5 +1,5 @@
 import styles from './Footer.module.css';
-import Logo from '../../components/Logo'
+import Logo from '../components/Logo'
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -21,7 +21,7 @@ export default function Footer() {
             {[
               {
                 title: 'Biblioteca',
-                items: ['Catalogo', 'In evidenza'],
+                items: ['Catalogo', 'In evidenza', 'Le mie prenotazioni'],
               },
               {
                 title: 'Privacy',

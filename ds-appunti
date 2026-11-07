@@ -1,15 +1,16 @@
 google scholar / scopus (per fare ricerche)
 
-mettere del codice saliente nel template commentata. IL rigetto ce se non metti bibliografia (analizzare un pò ciò che è stato fatto da altri analizzando testi scientifici, capire cosa hanno fatto e cosa hanno ottenuto gli altri), non c'è link repositroy, 
+mettere del codice saliente nel template (foto codice). IL rigetto ce se non metti bibliografia (analizzare un pò ciò che è stato fatto da altri analizzando testi scientifici, capire cosa hanno fatto e cosa hanno ottenuto gli altri), non c'è link repositroy, 
 non commenti codice o se è scritto male in italiano.
 
 
 
 RICERCHE:
-per design: 
+per design spunti: 
 0. https://www.figma.com/it-it/resource-library/esempi-siti-web-ai/ (per ispirazione)
 1. https://uiverse.io/ (per componenti)
 2. https://www.stylosheet.com/ (per componenti)
+3. preso spunto da https://opac.provincia.re.it/opac/resource/il-mio-nome-e-europa/RE202346870. Cercando di creare web app più moderna e più intuitiva e ho chiesto a loro (bibioteca correggio andato per studiare) un pò come funziona lato admin
 
 
 per bibliografia:
@@ -28,7 +29,7 @@ Pubblicazione in 2023 International Conference on Information Processing and Net
 DOI: 10.1109/ICIPNP62754.2023.00050
 Perché leggerlo: descrive la progettazione di un sistema web per la gestione bibliotecaria, includendo architettura browser-server, requisiti, modello ER e test funzionali.
 Dove citarlo: progettazione del database, definizione dei requisiti e metodologia di implementazione. È utile come lavoro correlato da confrontare con il tuo prototipo
-https://doi.org/10.1109/ICIPNP62754.2023.00050?utm_source=chatgpt.com
+https://doi.org/10.1109/ICIPNP62754.2023.00050
 
 
 3. “Design variations and evaluation of loanable technology web pages in academic library websites” (2023)
@@ -36,7 +37,7 @@ The Journal of Academic Librarianship, 49(3), articolo 102670.
 DOI: 10.1016/j.acalib.2023.102670
 Perché leggerlo: analizza le modalità con cui le biblioteche accademiche presentano e rendono accessibili le risorse disponibili per il prestito.
 Dove citarlo: progettazione delle schede delle risorse, visualizzazione della disponibilità e scelte dell'interfaccia. Il contesto riguarda tecnologie prestabili, quindi è un riferimento complementare, non uno studio generale su tutti i prestiti bibliotecari
-https://doi.org/10.1016/j.acalib.2023.102670?utm_source=chatgpt.com
+https://doi.org/10.1016/j.acalib.2023.102670
 
 
 

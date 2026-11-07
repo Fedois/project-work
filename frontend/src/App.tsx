@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Navbar from './views/home/Navbar';
+import Navbar from './views/Navbar';
+import Footer from './views/Footer';
 import Home from './views/home/Home';
-import Footer from './views/home/Footer';
 import BookDetailPage from './views/book/BookDetailPage';
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';

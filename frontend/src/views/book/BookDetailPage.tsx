@@ -11,7 +11,7 @@ import {
   Send,
   Barcode,
 } from 'lucide-react';
-import { getBookById } from '../../services/book.service';
+import { addFeedback, getBookById } from '../../services/book.service';
 import type { Book, Feedback } from '../../types/books';
 import { CATEGORY_LABELS, CATEGORY_COLORS, COVER_GRADIENTS } from '../../types/books';
 import styles from './BookDetailPage.module.css';
@@ -39,13 +39,14 @@ export default function BookDetailPage() {
   // const [isWishlisted, setIsWishlisted] = useState(false);
   const { showToast } = useToast();
 
-  // Local feedback form states (No API calls, purely client-side)
+  // Local feedback form states
   const [formRating, setFormRating] = useState<number>(5);
   const [formHoverRating, setFormHoverRating] = useState<number>(0);
   const [formTitle, setFormTitle] = useState('');
   const [formComment, setFormComment] = useState('');
+  const [submittingReview, setSubmittingReview] = useState(false);
 
-  // Local reviews list (combines database feedbacks, samples, and user newly added reviews)
+  // Local reviews list (combines database feedbacks and user newly added reviews)
   const [localFeedbacks, setLocalFeedbacks] = useState<Feedback[]>([]);
 
   // Fetch Book
@@ -78,6 +79,15 @@ export default function BookDetailPage() {
       isMounted = false;
     };
   }, [id]);
+
+  // Feedbacks ordered from most recent to least recent
+  const sortedFeedbacks = useMemo(() => {
+    return [...localFeedbacks].sort((a, b) => {
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return timeB - timeA;
+    });
+  }, [localFeedbacks]);
 
   // Compute review stats dynamically
   const reviewStats = useMemo<{ average: string; count: number; distribution: Record<number, number> }>(() => {
@@ -135,8 +145,7 @@ export default function BookDetailPage() {
     showToast(`Richiesta di prestito registrata per "${book.title}"! Ritira al desk.`);
   };
 
-  // Purely visual / client-side form submission
-  const handleSubmitReview = (e: React.FormEvent) => {
+  const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!user) {
@@ -149,30 +158,37 @@ export default function BookDetailPage() {
       return;
     }
 
-    const newFeedback = {
-      id: `user-rev-${Date.now()}`,
+    setSubmittingReview(true);
+
+    const newFeedback: Feedback = {
       rating: formRating,
-      createdAt: new Date(),
       title: formTitle.trim() || 'Recensione del lettore',
-      bookId: '231',
-      userId: '1',
+      bookId: id,
+      userId: user.id,
       user: {
-        id: '1',
-        firstName: 'Fede',
-        lastName: 'Der',
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
       },
       comment: formComment.trim(),
     };
 
-    // Prepend new feedback in local state
-    setLocalFeedbacks([newFeedback, ...localFeedbacks]);
+    try {
+      const result = await addFeedback(newFeedback);
+      setLocalFeedbacks((prev) => [result, ...prev]);
 
-    // Clear form
-    setFormTitle('');
-    setFormComment('');
-    setFormRating(5);
+      // Clear form
+      setFormTitle('');
+      setFormComment('');
+      setFormRating(5);
 
-    showToast('Grazie per la tua recensione! Aggiunta all\'anteprima qui sotto. ✨');
+      showToast('Grazie per la tua recensione! Aggiunta con successo. ✨');
+    } catch (error) {
+      console.error(error);
+      showToast('Errore nel salvataggio della recensione');
+    } finally {
+      setSubmittingReview(false);
+    }
   };
 
   // Render Loading / Error states
@@ -571,9 +587,10 @@ export default function BookDetailPage() {
                   type="submit"
                   className={styles.submitReviewBtn}
                   style={{ marginTop: 16 }}
+                  disabled={submittingReview}
                 >
                   <Send size={16} />
-                  <span>Invia recensione</span>
+                  <span>{submittingReview ? 'Invio in corso...' : 'Invia recensione'}</span>
                 </button>
               </form>
             </aside>
@@ -582,52 +599,67 @@ export default function BookDetailPage() {
             <div className={styles.reviewsListCol}>
               <div className={styles.reviewsListHeader}>
                 <h3 className={styles.reviewsCountTitle}>
-                  Tutte le recensioni ({localFeedbacks.length})
+                  Tutte le recensioni ({sortedFeedbacks.length})
                 </h3>
               </div>
 
-              {localFeedbacks.map((feedback) => {
-                const completeName = feedback.user.firstName + ' ' + feedback.user.lastName;
-                return (
-                  <article
-                    key={feedback.id}
-                    className={`${styles.reviewCard} ${feedback.id.startsWith('user-rev-') ? styles.reviewCardLocalUser : ''}`}
-                    aria-label={`Recensione di ${completeName}`}
-                  >
-                    {/* User Header */}
-                    <div className={styles.reviewUserRow}>
-                      <div className={styles.userInfoLeft}>
-                        <div className={styles.userAvatar} aria-hidden="true">
-                          {feedback.user.firstName[0]}{feedback.user.lastName[0]}
+              {sortedFeedbacks.length > 0 && (
+                sortedFeedbacks.map((feedback, index) => {
+                  const firstName = feedback.user?.firstName || 'Lettore';
+                  const lastName = feedback.user?.lastName || '';
+                  const completeName = `${firstName} ${lastName}`.trim();
+                  const initials = `${firstName[0] || 'U'}${lastName[0] || ''}`.toUpperCase();
+                  const reviewDate = feedback.createdAt
+                    ? new Date(feedback.createdAt).toLocaleDateString('it-IT', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })
+                    : 'Di recente';
+
+                  return (
+                    <article
+                      key={feedback.id || index}
+                      className={styles.reviewCard}
+                      aria-label={`Recensione di ${completeName}`}
+                    >
+                      {/* User Header */}
+                      <div className={styles.reviewUserRow}>
+                        <div className={styles.userInfoLeft}>
+                          <div className={styles.userAvatar} aria-hidden="true">
+                            {initials}
+                          </div>
+                          <div className={styles.userNameMeta}>
+                            <span className={styles.userName}>
+                              {completeName}
+                            </span>
+                            <span className={styles.userReviewDate}>
+                              {reviewDate}
+                            </span>
+                          </div>
                         </div>
-                        <div className={styles.userNameMeta}>
-                          <span className={styles.userName}>
-                            {completeName}
-                          </span>
-                          <span className={styles.userReviewDate}>{new Date(feedback.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+
+                        {/* Stars */}
+                        <div className={styles.reviewStars} aria-label={`${feedback.rating} stelle su 5`}>
+                          {[1, 2, 3, 4, 5].map((s) => (
+                            <Star
+                              key={s}
+                              size={15}
+                              fill={s <= feedback.rating ? 'currentColor' : 'none'}
+                            />
+                          ))}
                         </div>
                       </div>
 
-                      {/* Stars */}
-                      <div className={styles.reviewStars} aria-label={`${feedback.rating} stelle su 5`}>
-                        {[1, 2, 3, 4, 5].map((s) => (
-                          <Star
-                            key={s}
-                            size={15}
-                            fill={s <= feedback.rating ? 'currentColor' : 'none'}
-                          />
-                        ))}
-                      </div>
-                    </div>
+                      {/* Review Title */}
+                      {feedback.title && <h4 className={styles.reviewTitle}>{feedback.title}</h4>}
 
-                    {/* Review Title */}
-                    {feedback.title && <h4 className={styles.reviewTitle}>{feedback.title}</h4>}
-
-                    {/* Review Content */}
-                    <p className={styles.reviewBodyText}>{feedback.comment}</p>
-                  </article>
-                );
-              })}
+                      {/* Review Content */}
+                      <p className={styles.reviewBodyText}>{feedback.comment}</p>
+                    </article>
+                  );
+                })
+              )}
             </div>
           </div>
         </section>
