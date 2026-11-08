@@ -21,23 +21,23 @@ export default function Footer() {
             {[
               {
                 title: 'Biblioteca',
-                items: ['Catalogo', 'In evidenza', 'Le mie prenotazioni'],
+                items: [{title: 'Catalogo', href: '/#catalog'}, {title: 'In evidenza', href: '/#featured'}, {title: 'Le mie prenotazioni', href: '/my-books'}],
               },
               {
                 title: 'Privacy',
-                items: ['Privacy Policy', 'Termini di servizio', 'Cookie Policy'],
+                items: [{title: 'Privacy Policy', href: '/privacy-policy'}, {title: 'Termini di servizio', href: '/terms-of-service'}, {title: 'Cookie Policy', href: '/cookie-policy'}],
               },
               {
                 title: 'Social',
-                items: ['Facebook', 'Twitter', 'Instagram'],
+                items: [{title: 'Facebook', href: 'https://facebook.com'}, {title: 'Twitter', href: 'https://twitter.com'}, {title: 'Instagram', href: 'https://instagram.com'}],
               },
             ].map((col) => (
               <div key={col.title} className={styles.linkCol}>
                 <h3 className={styles.colTitle}>{col.title}</h3>
                 <ul role="list">
                   {col.items.map((item) => (
-                    <li key={item}>
-                      <a href="#" className={styles.colLink}>{item}</a>
+                    <li key={item.title}>
+                      <a href={item.href} className={styles.colLink}>{item.title}</a>
                     </li>
                   ))}
                 </ul>

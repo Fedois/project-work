@@ -9,7 +9,7 @@ import styles from './Navbar.module.css';
 const NAV_LINKS = [
   { label: 'Catalogo', href: '/#catalog' },
   { label: 'In evidenza', href: '/#featured' },
-  { label: 'Le mie prenotazioni', href: '/#my-books' },
+  { label: 'Le mie prenotazioni', href: '/my-books' },
 ];
 
 export default function Navbar() {

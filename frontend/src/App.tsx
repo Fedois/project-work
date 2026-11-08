@@ -6,6 +6,7 @@ import Home from './views/home/Home';
 import BookDetailPage from './views/book/BookDetailPage';
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';
+import MyBooks from './views/my-books/MyBooks';
 import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
@@ -41,6 +42,16 @@ export default function App() {
                 <>
                   <Navbar />
                   <BookDetailPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/my-books"
+              element={
+                <>
+                  <Navbar />
+                  <MyBooks />
                   <Footer />
                 </>
               }

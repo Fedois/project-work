@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Check, X, Info } from "lucide-react";
 import styles from "./Toast.module.css";
 
@@ -11,7 +11,7 @@ export interface ToastProps {
 }
 
 export default function Toast({ message, type, duration = 3500 }: ToastProps) {
-    const toastRef = useRef<HTMLDivElement>(null);
+    const [visible, setVisible] = useState(true);
     
     const color = {
         success: "#34d399",
@@ -29,16 +29,18 @@ export default function Toast({ message, type, duration = 3500 }: ToastProps) {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if(toastRef.current){
-                toastRef.current.remove();
-            }
+            setVisible(false);
         }, duration);
 
         return () => clearTimeout(timer);
     }, [duration]);
 
+    if (!visible) {
+        return null;
+    }
+
     return (
-        <div ref={toastRef} className={styles.toastNotice} role="status" aria-live="polite">
+        <div className={styles.toastNotice} role="status" aria-live="polite">
             <CurrentIcon size={18} color={color[type]} />
             <span>{message}</span>
         </div>

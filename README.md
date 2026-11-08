@@ -1,6 +1,6 @@
-# Titolo del Progetto 
+# Hubiblio
 
-Piattaforma digitale per la gestione dei servizi di un'impresa culturale.
+Piattaforma digitale per la gestione dei servizi di una biblioteca.
 
 ## Tecnologie
 
@@ -10,7 +10,7 @@ Piattaforma digitale per la gestione dei servizi di un'impresa culturale.
 - Autenticazione: Supabase Auth
 - Validazioni: Zod
 - Test: Vitest e Supertest
-- Deploy: Netlify e Render
+- Deploy: Netlify (frontend) e Render (backend)
 
 ## Avvio del progetto
 

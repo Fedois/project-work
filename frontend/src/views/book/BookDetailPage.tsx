@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import {
   ArrowLeft,
   Star,
@@ -10,13 +10,19 @@ import {
   Layers,
   Send,
   Barcode,
+  Clock,
+  CheckCircle2,
+  Loader2,
 } from 'lucide-react';
 import { addFeedback, getBookById } from '../../services/book.service';
+import { createReservation, checkBookReservation } from '../../services/reservation.service';
 import type { Book, Feedback } from '../../types/books';
+import type { Reservation } from '../../types/reservations';
 import { CATEGORY_LABELS, CATEGORY_COLORS, COVER_GRADIENTS } from '../../types/books';
 import styles from './BookDetailPage.module.css';
 import { useToast } from '../../context/ToastContext';
 import { useAuth } from '../../context/AuthContext';
+import LoadingBox from '../../components/LoadingBox';
 
 const RATING_DESCRIPTORS: Record<number, string> = {
   1: 'Poco convincente',
@@ -30,10 +36,17 @@ export default function BookDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   // Book state
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  // Reservation state
+  const [currentReservation, setCurrentReservation] = useState<Reservation | null>(null);
+  const [reserving, setReserving] = useState(false);
 
   // Local interaction states
   // const [isWishlisted, setIsWishlisted] = useState(false);
@@ -80,6 +93,29 @@ export default function BookDetailPage() {
     };
   }, [id]);
 
+  // Check user active reservation for this book
+  useEffect(() => {
+    if (!id || !user) {
+      setCurrentReservation(null);
+      return;
+    }
+
+    let isMounted = true;
+    checkBookReservation(id)
+      .then((res) => {
+        if (isMounted) {
+          setCurrentReservation(res);
+        }
+      })
+      .catch((err) => {
+        console.error('Errore nel controllo della prenotazione:', err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, user]);
+
   // Feedbacks ordered from most recent to least recent
   const sortedFeedbacks = useMemo(() => {
     return [...localFeedbacks].sort((a, b) => {
@@ -117,16 +153,6 @@ export default function BookDetailPage() {
   }, [localFeedbacks]);
 
   // ── Handlers ───────────────────────────────────────────────────────────────
-  // const handleWishlistToggle = () => {
-  //   const nextState = !isWishlisted;
-  //   setIsWishlisted(nextState);
-  //   showToast(
-  //     nextState
-  //       ? `"${book?.title}" aggiunto ai tuoi preferiti ❤️`
-  //       : `"${book?.title}" rimosso dai preferiti`
-  //   );
-  // };
-
   const handleShare = () => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href);
@@ -136,19 +162,40 @@ export default function BookDetailPage() {
     }
   };
 
-  const handleReserve = () => {
-    if (!book || book.quantity <= 0) return;
+  const handleReserve = async () => {
+    if (!book) return;
+
     if (!user) {
-      showToast('Per favore, accedi per prenotare');
+      showToast('Per favore, accedi per prenotare questo libro');
+      navigate('/login', { state: { from: location } });
       return;
     }
-    showToast(`Richiesta di prestito registrata per "${book.title}"! Ritira al desk.`);
+
+    if (reserving) return;
+
+    if (currentReservation?.status === 'PENDING') {
+      showToast('Hai già una richiesta di prenotazione in attesa per questo libro!');
+      return;
+    }
+
+    setReserving(true);
+
+    try {
+      const res = await createReservation(book.id);
+      setCurrentReservation(res);
+      showToast(`Richiesta di prenotazione inviata per "${book.title}"! Stato: in attesa. 📖`);
+    } catch (err: any) {
+      console.error('Errore prenotazione:', err);
+      showToast(err.message || 'Errore durante la prenotazione del libro');
+    } finally {
+      setReserving(false);
+    }
   };
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!user) {
+    if (!user || !book) {
       showToast('Per favore, accedi per scrivere una recensione');
       return;
     }
@@ -163,7 +210,7 @@ export default function BookDetailPage() {
     const newFeedback: Feedback = {
       rating: formRating,
       title: formTitle.trim() || 'Recensione del lettore',
-      bookId: id,
+      bookId: book.id,
       userId: user.id,
       user: {
         id: user.id,
@@ -193,15 +240,7 @@ export default function BookDetailPage() {
 
   // Render Loading / Error states
   if (loading) {
-    return (
-      <main className={styles.pageWrapper}>
-        <div className={styles.stateContainer}>
-          <div className={styles.spinner} role="status" aria-label="Caricamento del libro" />
-          <h2 className={styles.stateTitle}>Apertura del volume in corso...</h2>
-          <p className={styles.stateText}>Stiamo recuperando i dettagli del libro dalla biblioteca digitale Hubiblio.</p>
-        </div>
-      </main>
-    );
+    return <LoadingBox title="Apertura del volume in corso..." text="Stiamo recuperando i dettagli del libro dalla biblioteca digitale Hubiblio." />
   }
 
   if (error || !book) {
@@ -307,16 +346,117 @@ export default function BookDetailPage() {
 
             {/* Primary & Secondary Actions */}
             <div className={styles.actionButtonGroup}>
-              <button
-                type="button"
-                className={styles.primaryReserveBtn}
-                onClick={handleReserve}
-                disabled={!isAvailable}
-                aria-label={`Prenota prestito per ${book.title}`}
-              >
-                <BookMarked size={18} />
-                <span>{isAvailable ? 'Prenota prestito' : 'Non disponibile'}</span>
-              </button>
+              {(() => {
+                if (reserving) {
+                  return (
+                    <button
+                      type="button"
+                      className={styles.primaryReserveBtn}
+                      disabled
+                      aria-label="Invio richiesta in corso"
+                    >
+                      <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
+                      <span>Invio richiesta...</span>
+                    </button>
+                  );
+                }
+
+                if (currentReservation?.status === 'PENDING') {
+                  return (
+                    <button
+                      type="button"
+                      className={`${styles.primaryReserveBtn} ${styles.reservePending}`}
+                      onClick={() => navigate('/my-books')}
+                      aria-label="Prenotazione in attesa di approvazione"
+                    >
+                      <Clock size={18} />
+                      <span>Prenotazione in attesa</span>
+                    </button>
+                  );
+                }
+
+                if (currentReservation?.status === 'APPROVED') {
+                  return (
+                    <button
+                      type="button"
+                      className={`${styles.primaryReserveBtn} ${styles.reserveApproved}`}
+                      onClick={() => navigate('/my-books')}
+                      aria-label="Prenotazione approvata, pronto al ritiro"
+                    >
+                      <CheckCircle2 size={18} />
+                      <span>Pronto al ritiro al desk</span>
+                    </button>
+                  );
+                }
+
+                if (currentReservation?.status === 'FULFILLED') {
+                  return (
+                    <button
+                      type="button"
+                      className={`${styles.primaryReserveBtn} ${styles.reserveFulfilled}`}
+                      onClick={() => navigate('/my-books')}
+                      aria-label="Volume attualmente in prestito"
+                    >
+                      <BookOpen size={18} />
+                      <span>In tuo prestito</span>
+                    </button>
+                  );
+                }
+
+                return (
+                  <button
+                    type="button"
+                    className={styles.primaryReserveBtn}
+                    onClick={handleReserve}
+                    disabled={!isAvailable}
+                    aria-label={`Prenota prestito per ${book.title}`}
+                  >
+                    <BookMarked size={18} />
+                    <span>{isAvailable ? 'Prenota prestito' : 'Non disponibile'}</span>
+                  </button>
+                );
+              })()}
+
+              {currentReservation?.status === 'PENDING' && (
+                <div className={styles.reservationNoticeBox}>
+                  <span>Hai una richiesta di prenotazione in attesa per questo volume.</span>
+                  <Link to="/my-books" className={styles.reservationNoticeLink}>
+                    Visualizza in Le mie prenotazioni →
+                  </Link>
+                </div>
+              )}
+
+              {currentReservation?.status === 'APPROVED' && (
+                <div
+                  className={styles.reservationNoticeBox}
+                  style={{ background: '#ecfdf5', borderColor: '#a7f3d0', color: '#065f46' }}
+                >
+                  <span>La prenotazione è confermata! Puoi ritirare il libro al desk.</span>
+                  <Link
+                    to="/my-books"
+                    className={styles.reservationNoticeLink}
+                    style={{ color: '#047857' }}
+                  >
+                    Dettagli in Le mie prenotazioni →
+                  </Link>
+                </div>
+              )}
+
+              {currentReservation?.status === 'FULFILLED' && (
+                <div
+                  className={styles.reservationNoticeBox}
+                  style={{ background: '#eef2ff', borderColor: '#c7d2fe', color: '#3730a3' }}
+                >
+                  <span>Hai questo libro in prestito attivo. Ricordati la data di restituzione.</span>
+                  <Link
+                    to="/my-books"
+                    className={styles.reservationNoticeLink}
+                    style={{ color: '#4338ca' }}
+                  >
+                    Vedi scadenze in Le mie prenotazioni →
+                  </Link>
+                </div>
+              )}
 
               <div className={styles.secondaryActionsRow}>
                 {/* <button
