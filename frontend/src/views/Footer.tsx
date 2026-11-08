@@ -37,7 +37,11 @@ export default function Footer() {
                 <ul role="list">
                   {col.items.map((item) => (
                     <li key={item.title}>
-                      <a href={item.href} className={styles.colLink}>{item.title}</a>
+                      {item.href.includes('#') ? (
+                        <a href={item.href} className={styles.colLink}>{item.title}</a>
+                      ) : (
+                        <Link to={item.href} className={styles.colLink}>{item.title}</Link>
+                      )}
                     </li>
                   ))}
                 </ul>

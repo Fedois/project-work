@@ -83,9 +83,15 @@ export default function Navbar() {
         <ul className={styles.links} role="list">
           {NAV_LINKS.map((l) => (
             <li key={l.label}>
-              <a href={l.href} className={styles.link}>
-                {l.label}
-              </a>
+              {l.href.includes('#') ? (
+                <a href={l.href} className={styles.link}>
+                  {l.label}
+                </a>
+              ) : (
+                <Link to={l.href} className={styles.link}>
+                  {l.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
@@ -159,13 +165,23 @@ export default function Navbar() {
           <ul role="list">
             {NAV_LINKS.map((l) => (
               <li key={l.label}>
-                <a
-                  href={l.href}
-                  className={styles.mobileLink}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {l.label}
-                </a>
+                {l.href.includes('#') ? (
+                  <a
+                    href={l.href}
+                    className={styles.mobileLink}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={l.href}
+                    className={styles.mobileLink}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {l.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
