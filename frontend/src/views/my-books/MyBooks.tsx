@@ -9,11 +9,9 @@ import {
   AlertCircle,
   Calendar,
   ArrowRight,
-  RotateCcw,
   Library,
   CheckCheck,
   Loader2,
-  AlertTriangle,
 } from 'lucide-react';
 import { getMyReservations, cancelReservation } from '../../services/reservation.service';
 import type { Reservation, Loan, ReservationStatus } from '../../types/reservations';

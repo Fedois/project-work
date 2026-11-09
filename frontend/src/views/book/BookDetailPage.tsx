@@ -526,7 +526,7 @@ export default function BookDetailPage() {
 
         {/* ── Feedback & Reviews Section ─────────────────────────────────── */}
         <FeedbackSection 
-          bookId={id} 
+          bookId={book.id} 
           feedbacks={sortedFeedbacks} 
           stats={reviewStats} 
           onFeedbackAdded={handleFeedbackAdded}
