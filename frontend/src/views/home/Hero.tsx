@@ -34,7 +34,7 @@ export default function Hero({ searchQuery, onSearchChange, onSearchSubmit }: He
       <Snowfall
         images={bookIcons}
         snowflakeCount={25}
-        radius={[30, 45]}
+        radius={[15, 30]}
         speed={[0.5, 1.2]}
         wind={[-0.5, 0.5]}
         style={{
