@@ -1,5 +1,19 @@
 import { Search, Sparkles, TrendingUp } from 'lucide-react';
 import styles from './Hero.module.css';
+import Snowfall from 'react-snowfall';
+
+const bookIcons = ['📒', '📘', '📙', '📗', '📓', '📔'].map((emoji) => {
+  const img = document.createElement('img');
+
+  img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+        font-size="48">${emoji}</text>
+    </svg>
+  `)}`;
+
+  return img;
+});
 
 interface HeroProps {
   searchQuery: string;
@@ -17,6 +31,19 @@ export default function Hero({ searchQuery, onSearchChange, onSearchSubmit }: He
   return (
     <section className={styles.hero} aria-labelledby="hero-heading">
       {/* Background blobs */}
+      <Snowfall
+        images={bookIcons}
+        snowflakeCount={25}
+        radius={[30, 45]}
+        speed={[0.5, 1.2]}
+        wind={[-0.5, 0.5]}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: 'none',
+        }}
+      />
       <div className={styles.blobA} aria-hidden="true" />
       <div className={styles.blobB} aria-hidden="true" />
       <div className={styles.blobC} aria-hidden="true" />

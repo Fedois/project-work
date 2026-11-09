@@ -52,9 +52,6 @@
 .grid {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgb(98 114 245 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(98 114 245 / 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
   pointer-events: none;
