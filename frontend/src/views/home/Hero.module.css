@@ -74,21 +74,6 @@
   gap: 28px;
 }
 
-/* Badge */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 40px;
-  background: var(--brand-50);
-  border: 1px solid var(--brand-200);
-  color: var(--brand-600);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
-
 /* Heading */
 .heading {
   font-family: 'Playfair Display', serif;

@@ -11,8 +11,8 @@ export default function Footer() {
           <div className={styles.brand}>
             <Link to="/"><Logo variant="footer" size={18}/></Link>
             <p className={styles.brandDesc}>
-              La biblioteca digitale che ti avvicina al mondo dei libri.
-              Esplora, scopri, prenota.
+              Migliaia di libri a portata di click. Scopri nuovi autori, 
+              esplora generi diversi e lasciati sorprendere dalla lettura.
             </p>
           </div>
 

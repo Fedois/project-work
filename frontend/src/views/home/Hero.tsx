@@ -50,12 +50,6 @@ export default function Hero({ searchQuery, onSearchChange, onSearchSubmit }: He
       <div className={styles.grid} aria-hidden="true" />
 
       <div className={styles.content}>
-        {/* Pill badge */}
-        <div className={styles.badge}>
-          <Sparkles size={13} />
-          <span>La tua biblioteca digitale personale</span>
-        </div>
-
         <h1 id="hero-heading" className={styles.heading}>
           Esplora un universo<br />
           <span className={styles.gradientText}>di storie straordinarie</span>
