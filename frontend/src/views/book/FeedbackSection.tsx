@@ -5,6 +5,7 @@ import type { Feedback } from '../../types/books';
 import { useToast } from '../../context/ToastContext';
 import { useAuth } from '../../context/AuthContext';
 import styles from './FeedbackSection.module.css';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const RATING_DESCRIPTORS: Record<number, string> = {
   1: 'Poco convincente',
@@ -31,6 +32,10 @@ export default function FeedbackSection({ bookId, feedbacks, stats, onFeedbackAd
   const { user } = useAuth();
   const { showToast } = useToast();
 
+  // Navigate
+  const navigate = useNavigate();
+  const location = useLocation();
+
   // Form state
   const [formRating, setFormRating] = useState<number>(5);
   const [formHoverRating, setFormHoverRating] = useState<number>(0);
@@ -52,6 +57,7 @@ export default function FeedbackSection({ bookId, feedbacks, stats, onFeedbackAd
 
     if (!user) {
       showToast('Per favore, accedi per scrivere una recensione');
+      navigate('/login', { state: { from: location } });
       return;
     }
 

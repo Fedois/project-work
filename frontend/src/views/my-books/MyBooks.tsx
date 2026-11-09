@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   BookOpen,
   BookMarked,
@@ -47,8 +47,6 @@ export default function MyBooks() {
   const [error, setError] = useState<string | null>(null);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterTab>('ALL');
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const fetchData = useCallback(async () => {
     if (!user) return
@@ -73,7 +71,6 @@ export default function MyBooks() {
         fetchData();
       } else {
         setLoading(false);
-        navigate('/login', { state: { from: location } });
       }
     }
   }, [user, authLoading, fetchData]);

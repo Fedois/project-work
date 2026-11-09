@@ -10,6 +10,7 @@ import MyBooks from './views/my-books/MyBooks';
 import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -46,16 +47,18 @@ export default function App() {
                 </>
               }
             />
-            <Route
-              path="/my-books"
-              element={
-                <>
-                  <Navbar />
-                  <MyBooks />
-                  <Footer />
-                </>
-              }
-            />
+            <Route element={<ProtectedRoute />}>
+              <Route
+                path="/my-books"
+                element={
+                  <>
+                    <Navbar />
+                    <MyBooks />
+                    <Footer />
+                  </>
+                }
+              />
+            </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
