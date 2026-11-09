@@ -22,6 +22,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import styles from './MyBooks.module.css';
 import LoadingBox from '../../components/LoadingBox';
+import ErrorBox from '../../components/ErrorBox';
 
 type FilterTab = 'ALL' | 'PENDING' | 'APPROVED' | 'LOANS';
 
@@ -100,7 +101,7 @@ export default function MyBooks() {
     }
   };
 
-  // Build unified item list for clean rendering and filtering
+  // Build unified item list for clean rendering and filtering (reservations and loans)
   const unifiedItems: UnifiedItem[] = useMemo(() => {
     const list: UnifiedItem[] = [];
 
@@ -265,26 +266,7 @@ export default function MyBooks() {
 
   // If error occurred
   if (error) {
-    return (
-      <main className={styles.pageWrapper}>
-        <div className={styles.container}>
-          <div className={styles.stateCard}>
-            <div
-              className={styles.stateIconWrap}
-              style={{ background: '#fef2f2', color: '#dc2626' }}
-            >
-              <AlertTriangle size={32} />
-            </div>
-            <h2 className={styles.stateTitle}>Si è verificato un errore</h2>
-            <p className={styles.stateSubtitle}>{error}</p>
-            <button type="button" onClick={fetchData} className={styles.primaryActionBtn}>
-              <RotateCcw size={16} />
-              Riprova
-            </button>
-          </div>
-        </div>
-      </main>
-    );
+    return <ErrorBox error={error} fetchData={fetchData} />
   }
 
   return (
