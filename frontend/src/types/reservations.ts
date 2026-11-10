@@ -33,6 +33,19 @@ export interface MyBooksData {
   loans: Loan[];
 }
 
+export interface UnifiedItem {
+  id: string;
+  type: 'reservation' | 'loan';
+  book: Reservation['book'];
+  status: ReservationStatus | 'RETURNED';
+  createdAt: string | Date;
+  dateLabel: string;
+  dueDate?: string | Date;
+  returnedAt?: string | Date | null;
+  rawReservation?: Reservation;
+  rawLoan?: Loan;
+}
+
 export const RESERVATION_STATUS_CONFIG: Record<
   ReservationStatus,
   {
