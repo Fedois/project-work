@@ -9,3 +9,6 @@ SEO
 coverImagePath utilizzando supabase storage, per ora solo https
 Foto profilo (avatar)
 modale di conferma che per ora uso javascript confirm('confermare eliminazione'), brutto esteticamente
+filtrare dashboard libri
+test unitari
+AI dove ti suggerisce libri in base a cosa cerchi
