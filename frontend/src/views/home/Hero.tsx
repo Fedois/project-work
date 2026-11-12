@@ -1,4 +1,4 @@
-import { Search, Sparkles, TrendingUp } from 'lucide-react';
+import { Search, TrendingUp } from 'lucide-react';
 import styles from './Hero.module.css';
 import Snowfall from 'react-snowfall';
 

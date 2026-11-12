@@ -1,6 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
 import * as bookService from "../services/book.service.js";
-import * as authService from "../services/auth.service.js";
 
 export async function getBooks(req: Request, res: Response, next: NextFunction) {
   try {
@@ -28,7 +27,7 @@ export async function getBookById(req: Request, res: Response, next: NextFunctio
 
 export async function addFeedback(req: Request, res: Response, next: NextFunction) {
   try {
-    const userId = await authService.getCurrentUserFromReq(req)
+    const userId = res.locals.user?.id;
 
     if (!userId) {
       return res.status(401).json({ status: "error", message: "Utente non autenticato" });

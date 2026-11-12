@@ -3,6 +3,7 @@ import express from "express";
 import bookRoutes from "./routes/book.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import reservationRoutes from "./routes/reservation.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api/books", bookRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/reservations", reservationRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Server startup
 const PORT = Number(process.env.PORT ?? 3000);

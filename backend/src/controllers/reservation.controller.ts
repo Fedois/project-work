@@ -1,10 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import * as reservationService from "../services/reservation.service.js";
-import * as authService from "../services/auth.service.js";
 
 export async function createReservation(req: Request, res: Response, next: NextFunction) {
   try {
-    const userId = await authService.getCurrentUserFromReq(req);
+    const userId = res.locals.user?.id;
 
     if (!userId) {
       res.status(401).json({
@@ -36,7 +35,7 @@ export async function createReservation(req: Request, res: Response, next: NextF
 
 export async function getMyReservations(req: Request, res: Response, next: NextFunction) {
   try {
-    const userId = await authService.getCurrentUserFromReq(req);
+    const userId = res.locals.user?.id;
 
     if (!userId) {
       res.status(401).json({
@@ -55,7 +54,7 @@ export async function getMyReservations(req: Request, res: Response, next: NextF
 
 export async function checkBookReservation(req: Request, res: Response, next: NextFunction) {
   try {
-    const userId = await authService.getCurrentUserFromReq(req);
+    const userId = res.locals.user?.id;
 
     if (!userId) {
       res.json({
@@ -85,7 +84,7 @@ export async function checkBookReservation(req: Request, res: Response, next: Ne
 
 export async function cancelReservation(req: Request, res: Response, next: NextFunction) {
   try {
-    const userId = await authService.getCurrentUserFromReq(req);
+    const userId = res.locals.user?.id;
 
     if (!userId) {
       res.status(401).json({

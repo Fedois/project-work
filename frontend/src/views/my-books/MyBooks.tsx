@@ -8,7 +8,7 @@ import {
   Library,
 } from 'lucide-react';
 import { getMyReservations, cancelReservation } from '../../services/reservation.service';
-import type { Reservation, Loan, ReservationStatus, UnifiedItem } from '../../types/reservations';
+import type { Reservation, Loan, UnifiedItem } from '../../types/reservations';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import styles from './MyBooks.module.css';
@@ -125,9 +125,7 @@ export default function MyBooks() {
   const counts = useMemo(() => {
     const pending = reservations.filter((r) => r.status === 'PENDING').length;
     const approved = reservations.filter((r) => r.status === 'APPROVED').length;
-    const activeLoans =
-      loans.filter((l) => !l.returnedAt).length +
-      reservations.filter((r) => r.status === 'FULFILLED').length;
+    const activeLoans = loans.filter((l) => !l.returnedAt).length
 
     return {
       total: unifiedItems.length,

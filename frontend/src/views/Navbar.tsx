@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, LogOut, UserPlus, LogIn } from 'lucide-react';
+import { Menu, X, ChevronDown, LogOut, UserPlus, LogIn, LayoutDashboard } from 'lucide-react';
 import Logo from '../components/Logo';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -21,6 +21,8 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const isLibrarianOrAdmin = user?.role === 'LIBRARIAN' || user?.role === 'ADMIN';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -94,6 +96,15 @@ export default function Navbar() {
               )}
             </li>
           ))}
+          {/* Dashboard link per bibliotecari/admin */}
+          {isLibrarianOrAdmin && (
+            <li>
+              <Link to="/dashboard" className={styles.link} style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                <LayoutDashboard size={14} />
+                Pannello bibliotecario
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* Desktop Actions */}
@@ -121,7 +132,25 @@ export default function Navbar() {
                   <div className={styles.dropdownUserInfo}>
                     <p className={styles.dropdownUserName}>{fullDisplayName}</p>
                     <p className={styles.dropdownUserEmail}>{user.email}</p>
+                    {isLibrarianOrAdmin && (
+                      <p style={{ fontSize: '.72rem', color: '#7c3aed', fontWeight: 600, margin: '2px 0 0' }}>
+                        {user.role}
+                      </p>
+                    )}
                   </div>
+
+                  {isLibrarianOrAdmin && (
+                    <Link
+                      to="/dashboard"
+                      className={styles.dropdownItem}
+                      style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}
+                      onClick={() => setDropdownOpen(false)}
+                      role="menuitem"
+                    >
+                      <LayoutDashboard size={16} />
+                      <span>Pannello bibliotecario</span>
+                    </Link>
+                  )}
 
                   <button
                     type="button"
@@ -184,6 +213,19 @@ export default function Navbar() {
                 )}
               </li>
             ))}
+            {isLibrarianOrAdmin && (
+              <li>
+                <Link
+                  to="/dashboard"
+                  className={styles.mobileLink}
+                  onClick={() => setMenuOpen(false)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+                >
+                  <LayoutDashboard size={14} />
+                  Dashboard
+                </Link>
+              </li>
+            )}
           </ul>
 
           <div className={styles.mobileAuthSection}>

@@ -7,6 +7,7 @@ import BookDetailPage from './views/book/BookDetailPage';
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';
 import MyBooks from './views/my-books/MyBooks';
+import Dashboard from './views/dashboard/Dashboard';
 import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
@@ -27,6 +28,8 @@ export default function App() {
         <ToastProvider>
           <ScrollToTop />
           <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route
               path="/"
               element={
@@ -47,6 +50,7 @@ export default function App() {
                 </>
               }
             />
+            {/* Protected route for logged in users (any authenticated user) */}
             <Route element={<ProtectedRoute />}>
               <Route
                 path="/my-books"
@@ -59,8 +63,11 @@ export default function App() {
                 }
               />
             </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            {/* Protected route for LIBRARIAN and ADMIN */}
+            <Route
+              element={<ProtectedRoute allowedRoles={['LIBRARIAN', 'ADMIN']} unauthorizedRedirect="/"/>}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
           </Routes>
         </ToastProvider>
       </AuthProvider>

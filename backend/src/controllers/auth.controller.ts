@@ -131,10 +131,7 @@ export async function getMe(req: Request, res: Response, next: NextFunction) {
     }
 
     if (!token) {
-      res.status(401).json({
-        status: "error",
-        message: "Non autenticato",
-      });
+      res.status(401).json({ status: "error", message: "Non autenticato" });
       return;
     }
 
@@ -151,10 +148,7 @@ export async function getMe(req: Request, res: Response, next: NextFunction) {
 
     if (!user) {
       clearAuthCookies(res);
-      res.status(401).json({
-        status: "error",
-        message: "Sessione non valida o scaduta",
-      });
+      res.status(401).json({ status: "error", message: "Sessione non valida o scaduta" });
       return;
     }
 
