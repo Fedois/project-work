@@ -1,3 +1,7 @@
+## Database
+
+Questo diagramma mostra il modello dati della webapp e mostra le principali entità del sistema e le relazioni che le collegano.
+
 ```mermaid
 erDiagram
 	direction TB
