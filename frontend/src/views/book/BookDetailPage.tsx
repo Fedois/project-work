@@ -396,17 +396,6 @@ export default function BookDetailPage() {
               )}
 
               <div className={styles.secondaryActionsRow}>
-                {/* <button
-                  type="button"
-                  className={`${styles.secondaryBtn} ${isWishlisted ? styles.secondaryBtnActive : ''}`}
-                  onClick={handleWishlistToggle}
-                  aria-pressed={isWishlisted}
-                  aria-label="Aggiungi ai desideri"
-                >
-                  <Heart size={16} fill={isWishlisted ? 'currentColor' : 'none'} />
-                  <span>{isWishlisted ? 'Salvato' : 'Preferiti'}</span>
-                </button> */}
-
                 <button
                   type="button"
                   className={styles.secondaryBtn}

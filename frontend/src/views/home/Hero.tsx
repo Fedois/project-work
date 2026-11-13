@@ -30,7 +30,7 @@ export default function Hero({ searchQuery, onSearchChange, onSearchSubmit }: He
 
   return (
     <section className={styles.hero} aria-labelledby="hero-heading">
-      {/* Background blobs */}
+      {/* Background emojy books */}
       <Snowfall
         images={bookIcons}
         snowflakeCount={25}
@@ -99,20 +99,6 @@ export default function Hero({ searchQuery, onSearchChange, onSearchSubmit }: He
             ))}
           </div>
         </div>
-
-        {/* Stats row */}
-        {/* <div className={styles.stats} aria-label="Statistiche biblioteca">
-          {[
-            { value: '12.400+', label: 'Libri disponibili' },
-            { value: '3.200+', label: 'Autori' },
-            { value: '48', label: 'Generi' },
-          ].map((s) => (
-            <div key={s.label} className={styles.stat}>
-              <span className={styles.statValue}>{s.value}</span>
-              <span className={styles.statLabel}>{s.label}</span>
-            </div>
-          ))}
-        </div> */}
       </div>
     </section>
   );
