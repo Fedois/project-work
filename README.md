@@ -8,8 +8,6 @@ Piattaforma digitale per la gestione dei servizi di una biblioteca.
 - Backend: Node.js, Express, TypeScript
 - Database: Prisma ORM e Supabase (PostgreSQL)
 - Autenticazione: Supabase Auth
-- Validazioni: Zod
-- Test: Vitest e Supertest
 - Deploy: Netlify (frontend) e Render (backend)
 
 ## Avvio del progetto

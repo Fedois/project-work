@@ -127,13 +127,9 @@ export default function Dashboard() {
 
         {/* Page Content */}
         <div className={styles.pageContent}>
-          {activeSection === 'overview' && (
-            <DashboardOverview onNavigate={setActiveSection} />
-          )}
+          {activeSection === 'overview' && <DashboardOverview onNavigate={setActiveSection} />}
           {activeSection === 'catalog' && <CatalogManagement />}
-          {activeSection === 'reservations' && (
-            <ReservationsManagement onNavigateToLoans={() => setActiveSection('loans')} />
-          )}
+          {activeSection === 'reservations' && <ReservationsManagement onNavigateToLoans={() => setActiveSection('loans')} />}
           {activeSection === 'loans' && <LoansManagement />}
         </div>
       </div>
