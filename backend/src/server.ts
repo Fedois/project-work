@@ -10,6 +10,9 @@ import cookieParser from "cookie-parser";
 // Express app creation
 const app = express();
 
+// Trust reverse proxy (e.g. Render, Railway, Vercel) for HTTPS cookies and headers
+app.set("trust proxy", 1);
+
 // Middleware
 app.use(
   cors({

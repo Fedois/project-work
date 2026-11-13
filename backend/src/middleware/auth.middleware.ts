@@ -1,7 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
-import { getCurrentUserFromToken } from "../services/auth.service.js";
-
-const COOKIE_ACCESS_TOKEN = "sb_access_token";
+import { getCurrentUserFromToken, refreshUserSession } from "../services/auth.service.js";
+import { COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN, setAuthCookies } from "../controllers/auth.controller.js";
 
 /**
  * Middleware that authenticates the user from the session (cookie or Bearer token).
@@ -15,15 +14,19 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
       token = req.headers.authorization.substring(7);
     }
 
-    if (!token) {
-      res.status(401).json({ status: "error", message: "Non autenticato" });
-      return;
+    let user = token ? await getCurrentUserFromToken(token) : null;
+
+    // If l'access token is not valid or expired, try the refresh with refresh token
+    if (!user && req.cookies?.[COOKIE_REFRESH_TOKEN]) {
+      const refreshed = await refreshUserSession(req.cookies[COOKIE_REFRESH_TOKEN]);
+      if (refreshed?.session) {
+        setAuthCookies(res, refreshed.session);
+        user = refreshed.user;
+      }
     }
 
-    const user = await getCurrentUserFromToken(token);
-
     if (!user) {
-      res.status(401).json({ status: "error", message: "Sessione non valida o scaduta" });
+      res.status(401).json({ status: "error", message: "Non autenticato o sessione scaduta" });
       return;
     }
 

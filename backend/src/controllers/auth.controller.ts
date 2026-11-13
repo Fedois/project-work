@@ -1,34 +1,39 @@
 import type { Request, Response, NextFunction } from "express";
 import * as authService from "../services/auth.service.js";
 
-const COOKIE_ACCESS_TOKEN = "sb_access_token";
-const COOKIE_REFRESH_TOKEN = "sb_refresh_token";
+export const COOKIE_ACCESS_TOKEN = "sb_access_token";
+export const COOKIE_REFRESH_TOKEN = "sb_refresh_token";
 
-function setAuthCookies(res: Response, session: { access_token: string; refresh_token?: string; expires_in?: number }) {
+function getCookieOptions() {
   const isProd = process.env.NODE_ENV === "production";
-
-  res.cookie(COOKIE_ACCESS_TOKEN, session.access_token, {
+  return {
     httpOnly: true,
     secure: isProd,
-    sameSite: "lax",
-    maxAge: (session.expires_in ?? 3600 * 24 * 7) * 1000,
+    sameSite: (isProd ? "none" : "lax") as "none" | "lax",
     path: "/",
+  };
+}
+
+export function setAuthCookies(res: Response, session: { access_token: string; refresh_token?: string; expires_in?: number }) {
+  const baseOptions = getCookieOptions();
+
+  res.cookie(COOKIE_ACCESS_TOKEN, session.access_token, {
+    ...baseOptions,
+    maxAge: (session.expires_in ?? 3600 * 24 * 7) * 1000,
   });
 
   if (session.refresh_token) {
     res.cookie(COOKIE_REFRESH_TOKEN, session.refresh_token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: "lax",
+      ...baseOptions,
       maxAge: 30 * 24 * 3600 * 1000, // 30 giorni
-      path: "/",
     });
   }
 }
 
-function clearAuthCookies(res: Response) {
-  res.clearCookie(COOKIE_ACCESS_TOKEN, { path: "/" });
-  res.clearCookie(COOKIE_REFRESH_TOKEN, { path: "/" });
+export function clearAuthCookies(res: Response) {
+  const baseOptions = getCookieOptions();
+  res.clearCookie(COOKIE_ACCESS_TOKEN, baseOptions);
+  res.clearCookie(COOKIE_REFRESH_TOKEN, baseOptions);
 }
 
 export async function register(req: Request, res: Response) {
@@ -36,18 +41,12 @@ export async function register(req: Request, res: Response) {
     const { email, password, firstName, lastName } = req.body;
 
     if (!email || !password || !firstName || !lastName) {
-      res.status(400).json({
-        status: "error",
-        message: "Tutti i campi (nome, cognome, email, password) sono obbligatori",
-      });
+      res.status(400).json({ status: "error", message: "Tutti i campi (nome, cognome, email, password) sono obbligatori" });
       return;
     }
 
     if (typeof password !== "string" || password.length < 6) {
-      res.status(400).json({
-        status: "error",
-        message: "La password deve contenere almeno 6 caratteri",
-      });
+      res.status(400).json({ status: "error", message: "La password deve contenere almeno 6 caratteri" });
       return;
     }
 
@@ -62,16 +61,9 @@ export async function register(req: Request, res: Response) {
       setAuthCookies(res, result.session);
     }
 
-    res.status(201).json({
-      status: "ok",
-      user: result.user,
-      confirmationRequired: result.confirmationRequired,
-    });
+    res.status(201).json({ status: "ok", user: result.user, confirmationRequired: result.confirmationRequired });
   } catch (error: any) {
-    res.status(400).json({
-      status: "error",
-      message: error?.message || "Errore durante la registrazione",
-    });
+    res.status(400).json({ status: "error", message: error?.message || "Errore durante la registrazione" });
   }
 }
 
@@ -80,10 +72,7 @@ export async function login(req: Request, res: Response) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json({
-        status: "error",
-        message: "Email e password sono obbligatorie",
-      });
+      res.status(400).json({ status: "error", message: "Email e password sono obbligatorie" });
       return;
     }
 
@@ -93,15 +82,9 @@ export async function login(req: Request, res: Response) {
       setAuthCookies(res, result.session);
     }
 
-    res.json({
-      status: "ok",
-      user: result.user,
-    });
+    res.json({ status: "ok", user: result.user, session: result.session });
   } catch (error: any) {
-    res.status(401).json({
-      status: "error",
-      message: error?.message || "Credenziali non valide",
-    });
+    res.status(401).json({ status: "error", message: error?.message || "Credenziali non valide"});
   }
 }
 
