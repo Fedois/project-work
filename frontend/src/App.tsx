@@ -10,6 +10,7 @@ import MyBooks from './views/my-books/MyBooks';
 import Dashboard from './views/dashboard/Dashboard';
 import { ToastProvider } from './context/ToastContext';
 import { AuthProvider } from './context/AuthContext';
+import ServerWakeupBanner from './components/ServerWakeupBanner';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -27,6 +28,7 @@ export default function App() {
       <AuthProvider>
         <ToastProvider>
           <ScrollToTop />
+          <ServerWakeupBanner />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

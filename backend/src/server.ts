@@ -23,6 +23,11 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
+// Health check endpoint, for monitoring and cold-start detection because i use free plan on Render
+app.get(["/health", "/api/health"], (_req, res) => {
+  res.status(200).json({ status: "ok", uptime: Math.floor(process.uptime()), timestamp: new Date().toISOString() });
+});
+
 // Routes
 app.use("/api/books", bookRoutes);
 app.use("/api/auth", authRoutes);
