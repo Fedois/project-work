@@ -6,30 +6,21 @@ export async function createReservation(req: Request, res: Response, next: NextF
     const userId = res.locals.user?.id;
 
     if (!userId) {
-      res.status(401).json({
-        status: "error",
-        message: "Devi aver effettuato l'accesso per prenotare un libro",
-      });
+      res.status(401).json({ status: "error", message: "Devi aver effettuato l'accesso per prenotare un libro" });
       return;
     }
 
     const { bookId } = req.body;
 
     if (!bookId || typeof bookId !== "string") {
-      res.status(400).json({
-        status: "error",
-        message: "Identificativo del libro non valido o mancante",
-      });
+      res.status(400).json({ status: "error", message: "Identificativo del libro non valido o mancante" });
       return;
     }
 
     const result = await reservationService.createOrUpdateReservation(userId, bookId);
     res.json(result);
   } catch (error: any) {
-    res.status(400).json({
-      status: "error",
-      message: error?.message || "Errore durante la creazione della prenotazione",
-    });
+    res.status(400).json({ status: "error", message: error?.message || "Errore durante la creazione della prenotazione" });
   }
 }
 
@@ -38,10 +29,7 @@ export async function getMyReservations(req: Request, res: Response, next: NextF
     const userId = res.locals.user?.id;
 
     if (!userId) {
-      res.status(401).json({
-        status: "error",
-        message: "Autenticazione richiesta",
-      });
+      res.status(401).json({ status: "error", message: "Autenticazione richiesta" });
       return;
     }
 
@@ -57,10 +45,7 @@ export async function checkBookReservation(req: Request, res: Response, next: Ne
     const userId = res.locals.user?.id;
 
     if (!userId) {
-      res.json({
-        status: "ok",
-        reservation: null,
-      });
+      res.json({ status: "ok", reservation: null });
       return;
     }
 
@@ -68,10 +53,7 @@ export async function checkBookReservation(req: Request, res: Response, next: Ne
     const bookId = Array.isArray(paramBookId) ? paramBookId[0] : paramBookId;
 
     if (!bookId) {
-      res.status(400).json({
-        status: "error",
-        message: "ID libro mancante",
-      });
+      res.status(400).json({ status: "error", message: "ID libro mancante" });
       return;
     }
 
@@ -87,10 +69,7 @@ export async function cancelReservation(req: Request, res: Response, next: NextF
     const userId = res.locals.user?.id;
 
     if (!userId) {
-      res.status(401).json({
-        status: "error",
-        message: "Autenticazione richiesta",
-      });
+      res.status(401).json({ status: "error", message: "Autenticazione richiesta" });
       return;
     }
 
@@ -98,19 +77,13 @@ export async function cancelReservation(req: Request, res: Response, next: NextF
     const id = Array.isArray(paramId) ? paramId[0] : paramId;
 
     if (!id) {
-      res.status(400).json({
-        status: "error",
-        message: "ID prenotazione mancante",
-      });
+      res.status(400).json({ status: "error", message: "ID prenotazione mancante" });
       return;
     }
 
     const result = await reservationService.cancelUserReservation(userId, id);
     res.json(result);
   } catch (error: any) {
-    res.status(400).json({
-      status: "error",
-      message: error?.message || "Errore durante l'annullamento della prenotazione",
-    });
+    res.status(400).json({ status: "error", message: error?.message || "Errore durante l'annullamento della prenotazione" });
   }
 }

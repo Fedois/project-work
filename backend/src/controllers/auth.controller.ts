@@ -14,6 +14,12 @@ function getCookieOptions() {
   };
 }
 
+function clearAuthCookies(res: Response) {
+  const baseOptions = getCookieOptions();
+  res.clearCookie(COOKIE_ACCESS_TOKEN, baseOptions);
+  res.clearCookie(COOKIE_REFRESH_TOKEN, baseOptions);
+}
+
 export function setAuthCookies(res: Response, session: { access_token: string; refresh_token?: string; expires_in?: number }) {
   const baseOptions = getCookieOptions();
 
@@ -28,12 +34,6 @@ export function setAuthCookies(res: Response, session: { access_token: string; r
       maxAge: 30 * 24 * 3600 * 1000, // 30 giorni
     });
   }
-}
-
-export function clearAuthCookies(res: Response) {
-  const baseOptions = getCookieOptions();
-  res.clearCookie(COOKIE_ACCESS_TOKEN, baseOptions);
-  res.clearCookie(COOKIE_REFRESH_TOKEN, baseOptions);
 }
 
 export async function register(req: Request, res: Response) {
@@ -120,7 +120,7 @@ export async function getMe(req: Request, res: Response, next: NextFunction) {
 
     let user = await authService.getCurrentUserFromToken(token);
 
-    // Se l'access token è scaduto, tenta il refresh con il cookie di refresh
+    // If the access token is expired, try to refresh it with the refresh token cookie
     if (!user && req.cookies?.[COOKIE_REFRESH_TOKEN]) {
       const refreshed = await authService.refreshUserSession(req.cookies[COOKIE_REFRESH_TOKEN]);
       if (refreshed?.session) {
