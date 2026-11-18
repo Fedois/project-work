@@ -16,6 +16,8 @@ Per rendere l'applicazione maggiormente accessibile a un pubblico internazionale
 
 Un ulteriore sviluppo riguarderebbe la gestione delle immagini. Attualmente il campo `coverImagePath` permette di associare una copertina a un libro, ma l'architettura potrebbe essere estesa integrando **Supabase Storage** per la gestione e la conservazione delle immagini. Lo stesso approccio potrebbe essere utilizzato per introdurre le **foto profilo degli utenti**, tramite avatar associati al relativo account.
 
+Sempre nell’ambito della gestione delle immagini, sarebbe opportuno sostituire anche il logo dell’applicazione, che attualmente è rappresentato tramite un’icona della libreria **Lucide React**
+
 ### Progressive Web App, SEO e analytics
 
 Dal punto di vista tecnico, l'applicazione potrebbe essere trasformata in una **Progressive Web App (PWA)**, consentendo agli utenti di installarla sui propri dispositivi e migliorando l'esperienza di utilizzo anche in mobilità.
