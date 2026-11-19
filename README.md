@@ -27,6 +27,14 @@ cd backend
 npm install
 npm run dev
 ```
+## Utenze per test
+### Membro
+email: member@example.com
+password: password
+
+### Bibliotecario
+email: librarian@example.com
+password: password
 
 ## Specifiche Tecniche
 - node 24.17.0
