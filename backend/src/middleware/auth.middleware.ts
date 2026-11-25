@@ -16,7 +16,7 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
 
     let user = token ? await getCurrentUserFromToken(token) : null;
 
-    // If l'access token is not valid or expired, try the refresh with refresh token
+    // If access token is not valid or expired, try the refresh with refresh token
     if (!user && req.cookies?.[COOKIE_REFRESH_TOKEN]) {
       const refreshed = await refreshUserSession(req.cookies[COOKIE_REFRESH_TOKEN]);
       if (refreshed?.session) {

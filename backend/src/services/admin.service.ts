@@ -192,9 +192,7 @@ export async function adminFulfillReservation(reservationId: string, dueDate: st
 
   if (!reservation) throw new Error("Prenotazione non trovata");
   if (reservation.status !== ReservationStatus.APPROVED) {
-    throw new Error(
-      "Solo le prenotazioni in stato APPROVED possono essere evase"
-    );
+    throw new Error("Solo le prenotazioni in stato APPROVED possono essere evase");
   }
 
   // Create the loan, mark reservation as FULFILLED and decrement book available quantity in a single transaction

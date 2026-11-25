@@ -23,38 +23,43 @@ flowchart TB
 ### Architettura a tre livelli
 
 ```mermaid
-flowchart TB
-    subgraph ClientTier ["Livello di Presentazione (Frontend SPA)"]
-        UI["Interfaccia Utente (React 19 + TypeScript + Vite)"]
-        State["State Management (Context API: AuthContext, ToastContext)"]
-        Routing["Client Routing (React Router v7 + ProtectedRoute RBAC)"]
-        APIClient["API Client (apiFetch con Retry automatico e Wakeup listener)"]
-        UI --- State
-        UI --- Routing
-        Routing --- APIClient
+---
+config:
+  flowchart:
+    nodeSpacing: 15
+    rankSpacing: 18
+    padding: 6
+---
+flowchart LR
+    subgraph ClientTier["Livello di Presentazione<br>(Frontend SPA)"]
+        UI["Interfaccia Utente<br>(React 19 +<br>TypeScript + Vite)"]
+        State["State Management<br>(Context API:<br>AuthContext,<br>ToastContext)"]
+        Routing["Client Routing<br>(React Router v7 +<br>ProtectedRoute RBAC)"]
+        APIClient["API Client<br>(apiFetch)"]
     end
 
-    subgraph AppTier ["Livello Applicativo (Backend REST API)"]
-        Server["Express Web Server (Node.js v24 + TypeScript)"]
-        ProxyConf["Reverse Proxy Trust (app.set('trust proxy', 1))"]
-        AuthMid["Security Middleware (authenticate, requireLibrarian, requireUserLogged)"]
-        Controllers["Controller Layer (auth, book, reservation, admin)"]
-        Services["Service Layer (business logic, transactions, token refresh)"]
-        ORM["Prisma ORM Client (Type-Safe Database Access)"]
-        Server --- ProxyConf
-        Server --- AuthMid
-        AuthMid --- Controllers
-        Controllers --- Services
-        Services --- ORM
+    subgraph AppTier["Livello Applicativo<br>(Backend REST API)"]
+        Server["Express Web Server<br>(Node.js v24 +<br>TypeScript)"]
+        ProxyConf["Reverse Proxy Trust<br>(app.set(<br>'trust proxy', 1))"]
+        AuthMid["Security Middleware<br>(authenticate,<br>requireLibrarian,<br>requireUserLogged)"]
+        Controllers["Controller Layer<br>(auth, book,<br>reservation, admin)"]
+        Services["Service Layer<br>(business logic,<br>transactions,<br>token refresh)"]
+        ORM["Prisma ORM Client<br>(Type-Safe<br>Database Access)"]
     end
 
-    subgraph DataTier ["Livello di Persistenza (Database & Identity)"]
-        PG[("PostgreSQL Database (Supabase Cloud)")]
-        AuthService[("Supabase Auth (JWT & Bcrypt Engine)")]
-        ORM --- PG
-        Services -.-> AuthService
+    subgraph DataTier["Livello di Persistenza<br>(Database &amp; Identity)"]
+        PG[("PostgreSQL<br>Database<br>(Supabase Cloud)")]
+        AuthService[("Supabase Auth<br>(JWT &amp;<br>Bcrypt Engine)")]
     end
 
-    APIClient -- "HTTPS / JSON Payload / HttpOnly Cookies" --> Server
-    Server -- "HTTP 200/201/400/401/403/404 + Set-Cookie" --> APIClient
+    UI --- State & Routing
+    Routing --- APIClient
+    Server --- ProxyConf & AuthMid
+    AuthMid --- Controllers
+    Controllers --- Services
+    Services --- ORM
+    ORM --- PG
+    Services -.-> AuthService
+    APIClient -- "HTTPS / JSON<br>Payload<br>HttpOnly Cookies" --> Server
+    Server -- "HTTP<br>200/201/400/<br>401/403/404<br>+ Set-Cookie" --> APIClient
 ```

@@ -31,7 +31,7 @@ export function setAuthCookies(res: Response, session: { access_token: string; r
   if (session.refresh_token) {
     res.cookie(COOKIE_REFRESH_TOKEN, session.refresh_token, {
       ...baseOptions,
-      maxAge: 30 * 24 * 3600 * 1000, // 30 giorni
+      maxAge: 30 * 24 * 3600 * 1000, // 30 days
     });
   }
 }
