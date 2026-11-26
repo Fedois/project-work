@@ -15,7 +15,7 @@ export default async (req: Request) => {
     )    
     
     console.log(response.status)
-    console.log('Prossima esecuzone: ', next_run)
+    console.log('Prossima esecuzione: ', next_run)
 
   } catch (error) {
     console.log(error)
