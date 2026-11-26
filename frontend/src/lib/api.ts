@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.PROD ? import.meta.env.VITE_BACKEND_URL : '';
 
 /**
- * Funzione unificata per le chiamate API con supporto a cookie HttpOnly.
+ * Unified function for API calls with HttpOnly cookie support.
  */
 export async function apiFetch(endpoint: string, options?: RequestInit): Promise<any> {
   const response = await fetch(`${API_URL}${endpoint}`, {
