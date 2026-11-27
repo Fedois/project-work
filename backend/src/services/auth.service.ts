@@ -18,7 +18,7 @@ export async function registerUser({ email, password, firstName, lastName }: Reg
   const trimmedFirstName = firstName.trim();
   const trimmedLastName = lastName.trim();
 
-  // 1. Registrazione con Supabase Auth
+  // 1. Register with Supabase Auth
   const { data, error } = await supabase.auth.signUp({
     email: trimmedEmail,
     password,
@@ -41,7 +41,7 @@ export async function registerUser({ email, password, firstName, lastName }: Reg
     throw new Error("Impossibile creare l'utente su Supabase");
   }
 
-  // 2. Sincronizzazione nel database Prisma
+  // 2. Sync DB
   let dbUser = await prisma.user.findUnique({
     where: { email: trimmedEmail },
   });
@@ -77,7 +77,7 @@ export async function registerUser({ email, password, firstName, lastName }: Reg
 export async function loginUser({ email, password }: LoginDTO) {
   const trimmedEmail = email.trim().toLowerCase();
 
-  // 1. Login tramite Supabase Auth
+  // 1. Login with Supabase Auth
   const { data, error } = await supabase.auth.signInWithPassword({
     email: trimmedEmail,
     password,
@@ -92,7 +92,7 @@ export async function loginUser({ email, password }: LoginDTO) {
     throw new Error("Utente non trovato");
   }
 
-  // 2. Recupero o sincronizzazione con Prisma
+  // 2. Retrieve user from DB or create it
   let dbUser = await prisma.user.findUnique({
     where: { email: trimmedEmail },
   });
@@ -162,7 +162,7 @@ export async function logoutUser(accessToken?: string) {
     try {
       await supabase.auth.admin.signOut(accessToken);
     } catch {
-      // Ignora errori di invalidazione server-side se il token è già scaduto
+      // Ignore server-side invalidation errors if the token is already expired
     }
   }
   return { status: "ok" as const };
@@ -198,8 +198,5 @@ export async function refreshUserSession(refreshToken: string) {
         role: "MEMBER" as const,
       };
 
-  return {
-    user,
-    session: data.session,
-  };
+  return { user, session: data.session };
 }

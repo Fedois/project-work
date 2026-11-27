@@ -1,5 +1,5 @@
 import styles from './Footer.module.css';
-import Logo from '../components/Logo'
+import Logo from '../components/Logo';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -51,7 +51,9 @@ export default function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <p className={styles.copy}>L-31 project work n.22</p>
+          <p className={styles.copy}>
+            <a href="https://github.com/Fedois/project-work">L-31 project work n.22</a>
+          </p>
         </div>
       </div>
     </footer>

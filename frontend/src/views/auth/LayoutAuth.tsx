@@ -22,7 +22,7 @@ export default function LayoutAuth({ title, subtitle, children }: LayoutAuthProp
         <div className={styles.header}>
           <div className={styles.logoContainer}>
             <Link to="/" aria-label="Hubiblio Home">
-              <Logo variant="default" size={26} />
+              <Logo variant="default" />
             </Link>
           </div>
           <h1 className={styles.title}>{title}</h1>
